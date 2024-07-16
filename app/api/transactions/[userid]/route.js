@@ -26,3 +26,29 @@ export async function GET(req,{params}){
         })
     }
 }
+//log transaction
+export async function POST(req,{params}){
+    const {userid} = params;
+    const {username, currency, amount, extras} = await req.json()
+    try{
+        await connectdb()
+            await Transaction.create({
+                transaction : "USD Pinless airtime",
+                username: username,
+                userid:userid,
+                currency: currency,
+                amount: amount,
+                issuccessful: true,
+                extras :extras})
+
+        return  NextResponse.json({
+            message: "Transaction logged successfully",
+            success: true
+        })
+    }catch(error){
+        return NextResponse.json({
+            message: "Failed to log transaction!",
+            success: false
+        })
+    }
+}
