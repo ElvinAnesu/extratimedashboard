@@ -30,7 +30,7 @@ export async function GET(){
 }
 
 //clear transactions
-export async function PUT(req){
+export async function POST(req){
     const {supervisoremail, supervisorpassword, userid } = await req.json()
 
     try{
