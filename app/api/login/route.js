@@ -9,6 +9,9 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"
 
 export async function POST(req){
     const { email, password } = await req.json()
+    console.log("==========")
+    console.log(email, password)
+    console.log("==========")
     try{
         connectdb()
         const user = await User.findOne({ email });

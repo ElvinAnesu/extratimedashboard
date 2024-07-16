@@ -37,7 +37,7 @@ export default function Sidebar(){
                         </Link>
                     </li>
                     <li>
-                        <Link href="/dashboard/reports" className="flex items-center gap-2">
+                        <Link href="#" className="flex items-center gap-2">
                             <ReaderIcon />
                             Reports
                         </Link>

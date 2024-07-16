@@ -52,7 +52,7 @@ export default function TransactionTable(){
                             <td className="px-4">{transaction.transaction}</td>
                             <td className="px-4">{transaction.currency}</td>
                             <td className="px-4">{transaction.amount}</td>
-                            <td className="px-4">{transaction.executedby.split('-')[0]}</td>
+                            <td className="px-4">{transaction.userid}</td>
                             <td className={`px-4 ${(transaction.issuccessful) === true ? "text-green-600" : "text-red-600"}`}>{(transaction.issuccessful) === true ? "Success" : "Failed"}</td>
                             <td className="px-4">{transaction.createdAt}</td>
                         </tr>
