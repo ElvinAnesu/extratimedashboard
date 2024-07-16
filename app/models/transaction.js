@@ -35,7 +35,7 @@ const transactionSchema = new Schema({
     },
     
     extras : {
-        type : {value: Schema.Types.Mixed},
+        type : {},
         default:{}
     }
 

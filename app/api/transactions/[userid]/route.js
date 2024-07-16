@@ -7,7 +7,7 @@ export async function GET(req,{params}){
     console.log("userid",userid)
     try{
         await connectdb()
-        const transactions = await Transaction.find({userid:userid})
+        const transactions = await Transaction.find({userid:userid, cleared:false})
         if(!transactions){
             return NextResponse.json({
                 message:"failed to fetch transactions",
