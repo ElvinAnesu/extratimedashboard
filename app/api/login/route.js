@@ -29,13 +29,7 @@ export async function POST(req){
                 success: false
             });
         }
-        //deny agents access
-        if(user.role === "agent"){
-            return NextResponse.json({
-                message: "No access rights",
-                success: false
-            });
-        }
+       
         // Generate a JWT token
         const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, { expiresIn: "1h" })
         return NextResponse.json({
