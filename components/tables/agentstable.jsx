@@ -17,6 +17,7 @@ export default function AgentsTable(){
     const [deleteuser, setDeleteuser] = useState()
     const [deletedialogtitle,setDeletedialogtitle] = useState()
     const [deletedialogmsg, setDeletedialogmsg] = useState()
+    const [transactions, setTransactions] = useState()
 
     const viewUser = (_id) => {
         router.push(`/dashboard/users/${_id}`);
@@ -63,6 +64,34 @@ export default function AgentsTable(){
         }
     }
 
+    const getTransactions = async() => {
+        const res = await fetch("/api/transactions",{
+            method: "GET",
+            headers:{"Content-type":"application/json"}
+        })
+
+        const data = await res.json()
+
+        if(data.success){
+            setTransactions(data.transactions)
+            console.log(transactions)
+        }else{
+            setErrormsg(data.message)
+        }
+    }
+
+    const getTotalSalesForUser = (userid) => {
+        let totalSales = 0;
+        if(transactions){
+            transactions.forEach((transaction) => {
+                if (transaction.userid === userid) {
+                  totalSales += transaction.extras.amount;
+                }
+              });
+        }
+        return totalSales;
+      };
+
     const onOk = () => {
         setShowdeletedialog(false)
         window.location.reload()
@@ -70,6 +99,7 @@ export default function AgentsTable(){
 
     useEffect(()=>{
         getUsers()
+        getTransactions()
     },[])
 
     return( 
@@ -78,25 +108,23 @@ export default function AgentsTable(){
                 <tbody>
                     <tr className="bg-gray-200">
                         <td className="border border-white p-1">#</td>
-                        <td className="border border-white p-1">Surname</td>
-                        <td className="border border-white p-1">First Name</td>
+                        <td className="border border-white p-1">Agent name</td>
                         <td className="border border-white p-1">Role</td>
-                        <td className="border border-white p-1">Email</td>
                         <td className="border border-white p-1">Phone Number</td>
                         <td className="border border-white p-1">Location</td>
                         <td className="border border-white p-1">Supervisor</td>
+                        <td className="border border-white p-1">Sales</td>
                         <td className="border border-white p-1">Action</td>
                     </tr>
                     {users.map((user, i)=>(
                         <tr className="" key={i}>
                             <td className="border-b border p-1">{i+1}</td>
-                            <td className="border-b border p-1">{user.surname}</td>
-                            <td className="border-b border p-1">{user.firstname}</td>
+                            <td className="border-b border p-1">{`${user.firstname} ${user.surname}`}</td>
                             <td className="border-b border p-1">{user.role}</td>
-                            <td className="border-b border p-1">{user.email}</td>
                             <td className="border-b border p-1">{user.phonenumber}</td>
                             <td className="border-b border p-1">{user.location}</td>
-                            <td className="border-b border p-1">{user.supervisor.split('-')[0]}</td>
+                            <td className="border-b border p-1">{user.supervisor}</td>
+                            <td className="border-b border p-1">{getTotalSalesForUser(user._id)}</td>
                             <td className="border-b border p-1">
                                 <div className="flex gap-2 items-center">
                                     <button className="bg-blue-600 p-1 rounded flex items-center justify-center text-white"
