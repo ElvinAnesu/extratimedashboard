@@ -74,7 +74,7 @@ export default function TransactionTable(){
                 <tbody>
                     <tr className="bg-blue-200 font-semibold text-sm py-1">
                         <td className="px-4">Transaction</td>
-                        <td className="px-4">Currency</td>
+                        <td className="px-4">Receiver No.</td>
                         <td className="px-4">Amount</td>
                         <td className="px-4">Executed by</td>
                         <td className="px-4">Cleared</td>
@@ -83,7 +83,7 @@ export default function TransactionTable(){
                     {transactions.map((transaction, i)=> (
                         <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-white" key={i}>
                             <td className="px-4">{transaction.transaction}</td>
-                            <td className="px-4">{transaction.currency}</td>
+                            <td className="px-4">{transaction.extras.reciever}</td>
                             <td className="px-4">{transaction.amount}</td>  
                             <td className="px-4">{transaction.username}</td>
                             <td className={`px-4 ${(transaction.cleared) === true ? "text-green-600" : "text-amber-600"}`}>{(transaction.cleared) === true ? "Cleared" : "Pending"}</td>

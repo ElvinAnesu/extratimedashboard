@@ -6,10 +6,12 @@ import bcrypt from "bcrypt"
 
 
 //get all transactions
-export async function GET(){
+export async function GET({params}){
+
+ 
     try{
         connectdb()
-        const transactions = await Transaction.find()
+        const transactions = await Transaction.find().sort({ _id: -1 })
         if(!transactions){
             return NextResponse.json({
                 message: "failed to fetch transactions",
