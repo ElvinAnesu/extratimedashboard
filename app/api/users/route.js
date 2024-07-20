@@ -43,24 +43,41 @@ export async function POST(req){
     }
 }
 
-//get all users
-export async function GET(){
-    try{
-        connectdb()
-        const users = await User.find()
-        if(!users){
-            return NextResponse.json({
-                message:"Failed to fetch Users",
-                success: false
-            })
-        }
+
+// Get all users with pagination
+export async function GET(req) {
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page")) || 1;
+    const pageSize = parseInt(searchParams.get("pageSize")) || 10;
+  
+    try {
+      await connectdb();
+      const totalUsers = await User.countDocuments();
+      const users = await User.find()
+        .skip((page - 1) * pageSize)
+        .limit(pageSize);
+  
+      if (!users) {
         return NextResponse.json({
-            users,
-            message:"Users fetched successfully",
-            success: true
-        })
-    }catch(error){
-        console.log(error)
-        return NextResponse.json(error)
+          message: "Failed to fetch Users",
+          success: false,
+        });
+      }
+  
+      return NextResponse.json({
+        users,
+        total: totalUsers,
+        page,
+        pageSize,
+        message: "Users fetched successfully",
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json({
+        error,
+        message: "Error in fetching users",
+        success: false,
+      });
     }
-}
+  }

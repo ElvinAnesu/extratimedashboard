@@ -86,7 +86,7 @@ export default function TransactionTable() {
             <td className="px-4">Receiver No.</td>
             <td className="px-4">Amount</td>
             <td className="px-4">Executed by</td>
-            <td className="px-4">{/* Cleared */}</td>
+            <td className="px-4">Cleared </td>
             <td className="px-4">Time</td>
           </tr>
           {transactions.map((transaction, i) => (
