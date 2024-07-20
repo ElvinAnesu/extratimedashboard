@@ -31,20 +31,7 @@ export default function TransactionTable() {
     }
   };
 
-  const getTotals = async() =>{
-    const res = await fetch("/api/transactions/totals", {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      });
-  
-      const data = await res.json();
-  
-      if (data.success) {
-        setClearedSales(data.clearedsales)
-        setPendingSales(data.pendingsales)
-        setTotalSales(data.clearedsales + data.pendingsales)
-      } 
-  }
+ 
   const formatDate = (createdAt) => {
     const dateObj = new Date(createdAt);
     const now = new Date();
@@ -83,10 +70,23 @@ export default function TransactionTable() {
 
   useEffect(() => {
     getTransactions(page);
-    getTotals()
   }, [page]);
 
   useEffect(() => {
+    const getTotals = async() =>{
+      const res = await fetch("/api/transactions/totals", {
+          method: "GET",
+          headers: { "Content-type": "application/json" },
+        });
+    
+        const data = await res.json();
+    
+        if (data.success) {
+          setClearedSales(data.clearedsales)
+          setPendingSales(data.pendingsales)
+          setTotalSales(data.clearedsales + data.pendingsales)
+        } 
+    }
     getTotals()
   });
 
