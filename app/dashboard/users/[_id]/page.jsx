@@ -25,7 +25,7 @@ export default function ViewAdmin({params}){
 
 
     const getUser = async() => {
-        const res = await fetch(`http://localhost:3000/api/users/${_id}`,{
+        const res = await fetch(`/api/users/${_id}`,{
             method: "GET",
             headers:{"Content-type":"application/json"}
         })
@@ -186,7 +186,7 @@ export default function ViewAdmin({params}){
                         {edit? <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                             placeholder="Supervisor"
                             type="text"
-                            value={supervisor.split('-')[0]}
+                            value={supervisor}
                             disabled/> :
                             <select className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                                 onChange={(e)=> {
