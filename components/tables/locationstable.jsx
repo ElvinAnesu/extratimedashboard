@@ -17,7 +17,7 @@ export default function LocationsTable(){
     const [location, setLocation] = useState()
 
     const getLocations = async() => {
-        const res = await fetch("http://localhost:3000/api/locations",{
+        const res = await fetch("/api/locations",{
             method:"GET",
             headers:{"Content-type":"application/json"},
         })
@@ -30,7 +30,7 @@ export default function LocationsTable(){
     }
 
     const deleteLocation = async() => {
-        const res = await fetch(`http://localhost:3000/api/locations/${location}`,{
+        const res = await fetch(`/api/locations/${location}`,{
             method:"DELETE",
             headers:{"Content-type":"application/json"}
         })
