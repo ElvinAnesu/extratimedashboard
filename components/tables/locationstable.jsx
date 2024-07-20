@@ -54,20 +54,20 @@ export default function LocationsTable(){
 
     return( 
        <div className="min-w-full max-h-full overflow-hidden">
-            <table className="w-full">
+            <table className="w-full text-sm">
                 <tbody>
                     <tr className="bg-gray-200">
-                        <td className="border border-white p-1">#</td>
-                        <td className="border border-white p-1">Location</td>
-                        <td className="border border-white p-1">Action</td>
+                        <td className="border border-white px-1">#</td>
+                        <td className="border border-white px-1">Location</td>
+                        <td className="border border-white px-1">Action</td>
                     </tr>
                     {locations.map((location, i)=>(
                         <tr className="" key={i}>
-                            <td className="border-b border p-1">{i+1}</td>
-                            <td className="border-b border p-1">{location.location}</td>
-                            <td className="border-b border p-1">
+                            <td className="border-b border px-1">{i+1}</td>
+                            <td className="border-b border px-1">{location.location}</td>
+                            <td className="border-b border px-1">
                                 <div className="flex gap-2 items-center justify-center">
-                                    <button className="bg-red-600 p-1 rounded flex items-center justify-center"
+                                    <button className="bg-red-600 px-1 rounded flex items-center justify-center"
                                         onClick={() => {setLocation(location.location);setShowdialog(true)}}>
                                         <TrashIcon />
                                     </button>
