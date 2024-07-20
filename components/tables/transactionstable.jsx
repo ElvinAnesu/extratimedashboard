@@ -86,6 +86,10 @@ export default function TransactionTable() {
     getTotals()
   }, [page]);
 
+  useEffect(() => {
+    getTotals()
+  });
+
 
   const handlePreviousPage = () => {
     if (page > 1) {
