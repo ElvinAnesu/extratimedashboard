@@ -83,11 +83,9 @@ export default function TransactionTable() {
 
   useEffect(() => {
     getTransactions(page);
+    getTotals()
   }, [page]);
 
-  getTotals(()=>{
-    getTotals()
-  },[])
 
   const handlePreviousPage = () => {
     if (page > 1) {
