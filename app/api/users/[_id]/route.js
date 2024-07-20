@@ -37,3 +37,29 @@ export async function POST(req) {
     });
   }
 }
+
+export async function GET(req,{params}){
+  const {_id} = params
+  try{
+    connectdb()
+    const user = await User.findOne({_id})
+    if (!user) {
+      return NextResponse.json({
+        message: "User not found!",
+        success: false,
+      });
+    }
+
+    return NextResponse.json({
+      user,
+      message: "User fetched successfully",
+      success: true,
+    });
+  }catch(error){
+    return NextResponse.json({
+      error,
+      message: "Error in fetching users",
+      success: false,
+    });
+  }
+}
