@@ -45,6 +45,42 @@ export default function TransactionTable() {
         setTotalSales(data.clearedsales + data.pendingsales)
       } 
   }
+  const formatDate = (createdAt) => {
+    const dateObj = new Date(createdAt);
+    const now = new Date();
+
+    // Check if createdAt is today
+    if (
+      dateObj.getDate() === now.getDate() &&
+      dateObj.getMonth() === now.getMonth() &&
+      dateObj.getFullYear() === now.getFullYear()
+    ) {
+      const hours = String(dateObj.getHours()).padStart(2, '0');
+      const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+      return `today ${hours}:${minutes}`;
+    }
+
+    // Check if createdAt is yesterday
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (
+      dateObj.getDate() === yesterday.getDate() &&
+      dateObj.getMonth() === yesterday.getMonth() &&
+      dateObj.getFullYear() === yesterday.getFullYear()
+    ) {
+      const hours = String(dateObj.getHours()).padStart(2, '0');
+      const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+      return `yesterday ${hours}:${minutes}`;
+    }
+
+    // For any day before yesterday
+    const formattedDate = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${String(dateObj.getFullYear()).slice(-2)}`;
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    return `${formattedDate} ${hours}:${minutes}`;
+  };
+
+
   useEffect(() => {
     getTransactions(page);
   }, [page]);
@@ -98,7 +134,7 @@ export default function TransactionTable() {
               <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"}`}>
                 {transaction.cleared ? "Cleared" : "Pending"}
               </td>
-              <td className="px-4">{transaction.createdAt}</td>
+              <td className="px-4">{formatDate(transaction.createdAt)}</td>
             </tr>
           ))}
         </tbody>
