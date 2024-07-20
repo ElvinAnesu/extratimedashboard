@@ -69,11 +69,11 @@ export default function TransactionTable() {
 
 
   useEffect(() => {
-    getTransactions(page);
+    getTransactions(page)
   }, [page]);
 
-  useEffect(() => {
-    const getTotals = async() =>{
+  useEffect(()=>{
+    const getTotals = async() => {
       const res = await fetch("/api/transactions/totals", {
           method: "GET",
           headers: { "Content-type": "application/json" },
@@ -81,15 +81,16 @@ export default function TransactionTable() {
     
         const data = await res.json();
     
-        if (data.success) {
-          setClearedSales(data.clearedsales)
-          setPendingSales(data.pendingsales)
-          setTotalSales(data.clearedsales + data.pendingsales)
+        if (data.success) { 
+          setClearedSales(data.clearedsales)  
+          setPendingSales(data.pendingsales)     
+          setTotalSales(data.clearedsales+data.pendingsales)
+
+          console.log(data)
         } 
     }
     getTotals()
-  });
-
+  })
 
   const handlePreviousPage = () => {
     if (page > 1) {
