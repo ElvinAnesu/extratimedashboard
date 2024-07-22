@@ -82,27 +82,15 @@ export default function TransactionTable() {
         const data = await res.json();
     
         if (data.success) { 
-          let _clearedtransactions = 0
-          let _pendingtransactions = 0
+          setClearedSales(data.clearedsales)  
+          setPendingSales(data.pendingsales)     
+          setTotalSales(data.clearedsales+data.pendingsales)
 
-          data.transactions.forEach(transaction => {
-            if(transaction.extras.currency === "USD"){
-              if(transaction.extras.cleared){
-                _clearedtransactions = _clearedtransactions + transaction.extras.amount
-              }else{
-                _pendingtransactions = _pendingtransactions + transaction.extras.amount
-              }
-            }
-          })
-
-          setClearedSales(_clearedtransactions)
-          setPendingSales(_pendingtransactions)
-          setTotalSales(_clearedtransactions + _pendingtransactions)
           console.log(data)
         } 
     }
     getTotals()
-  },[pendingSales])
+  })
 
   const handlePreviousPage = () => {
     if (page > 1) {
