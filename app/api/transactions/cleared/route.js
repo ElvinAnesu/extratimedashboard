@@ -2,6 +2,11 @@ import connectdb from "@/mongodb"
 import { NextResponse } from "next/server"
 import Transaction from "@/app/models/transaction"
 
+export const config = {
+    runtime: 'edge',
+    revalidate: 0, // Forces dynamic rendering
+  }
+
 export async function GET(req) {
     try {
         await connectdb()

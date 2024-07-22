@@ -1,52 +1,17 @@
 "use client";
-import { EyeOpenIcon, TrashIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ConfirmDelete from "../dialogs/confirmdelete";
-import AlertDialog from "../dialogs/alertdialog";
 
 const PAGE_SIZE = 10;
 
 export default function SupervisorsTable() {
-  const router = useRouter();
   const [showdialog, setShowdialog] = useState(false);
-  const [showDeletedialog, setShowdeletedialog] = useState(false);
   const [users, setUsers] = useState([]);
   const [salesData, setSalesData] = useState({});
-  const [error, setError] = useState();
-  const [deleteuser, setDeleteuser] = useState();
-  const [deletedialogtitle, setDeletedialogtitle] = useState();
-  const [deletedialogmsg, setDeletedialogmsg] = useState();
+  const [clearedSalesData, setClearedSalesData] = useState({})
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-
-  const viewUser = (_id) => {
-    router.push(`/dashboard/users/${_id}`);
-  };
-
-  const confirmDelete = (_id) => {
-    setDeleteuser(_id);
-    setShowdialog(true);
-  };
-
-  const deleteUser = async () => {
-    const res = await fetch(`/api/users/${deleteuser}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      setDeletedialogtitle("Success");
-      setDeletedialogmsg(data.message);
-      setShowdeletedialog(true);
-    } else {
-      setDeletedialogtitle("Failed");
-      setDeletedialogmsg(data.message);
-      setShowdeletedialog(true);
-    }
-  };
+  
 
   const getUsers = async (page = 1) => {
     const res = await fetch("/api/users/filters", {
@@ -66,7 +31,8 @@ export default function SupervisorsTable() {
       setTotal(data.total);
       // Fetch sales data for each user
       data.users.forEach(user => {
-        getTotalSalesForUser(user._id);
+        getTotalSalesForUser(user._id)
+        getClearedSalesForUser(user._id)
       });
     } else {
       setError("Error fetching users");
@@ -78,9 +44,7 @@ export default function SupervisorsTable() {
       method: "GET",
       headers: { "Content-type": "application/json" },
     });
-
     const data = await res.json();
-
     if (data.success) {
       setSalesData(prevSalesData => ({
         ...prevSalesData,
@@ -92,12 +56,26 @@ export default function SupervisorsTable() {
     } else {
       setError(`Error fetching sales data for user ${userid}`);
     }
-  };
+  }
 
-  const onOk = () => {
-    setShowdeletedialog(false);
-    window.location.reload();
-  };
+  const getClearedSalesForUser = async (userid) => {
+    const res = await fetch(`/api/transactions/cleared/${userid}`, {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
+    });
+    const data = await res.json();
+    if (data.success) {
+      setClearedSalesData(prevSalesData => ({
+        ...prevSalesData,
+        [userid]: {
+          ...prevSalesData[userid],
+          totalCleared: data.clearedsales,
+        },
+      }));
+    } else {
+      setError(`Error fetching cleared sales data for user ${userid}`);
+    }
+  }
 
   useEffect(() => {
     getUsers(page);
@@ -139,7 +117,7 @@ export default function SupervisorsTable() {
                 {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
               </td>
               <td className="border-b border px-1">
-                {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
+                {clearedSalesData[user._id] ? clearedSalesData[user._id].totalCleared : "Loading..."}
               </td>
             </tr>
           ))}
@@ -164,8 +142,6 @@ export default function SupervisorsTable() {
           onConfirm={deleteUser}
         />
       )}
-
-      {showDeletedialog && <AlertDialog title={deletedialogtitle} message={deletedialogmsg} onOk={onOk} />}
     </div>
   );
 }
