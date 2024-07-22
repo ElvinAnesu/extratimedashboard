@@ -12,19 +12,10 @@ export async function GET(){
                 message: "Transactions not found"
             })
         }
-        let _clearedsales = 0;
-        let _pendingsales = 0;
-        transactions.forEach((transaction) => {
-            if (transaction.cleared) {
-            _clearedsales += transaction.extras.amount;
-            } else {
-            _pendingsales += transaction.extras.amount;
-            }
-        });
+        
         return NextResponse.json({
             success: true,
-            clearedsales: _clearedsales,
-            pendingsales: _pendingsales,
+            transactions,
             message:"totals fetched successfully"
         })
     }catch(error){
