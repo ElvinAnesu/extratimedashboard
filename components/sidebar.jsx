@@ -49,6 +49,12 @@ export default function Sidebar(){
                         </Link>
                     </li>
                     <li>
+                        <Link href="/dashboard/supervisors" className="flex items-center gap-2">
+                            <PersonIcon />
+                           Supervisors
+                        </Link>
+                    </li>
+                    <li>
                         <Link href="/dashboard/options" className="flex items-center gap-2">
                             <GearIcon />
                             Options

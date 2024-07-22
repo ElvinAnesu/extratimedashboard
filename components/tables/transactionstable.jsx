@@ -67,30 +67,41 @@ export default function TransactionTable() {
     return `${formattedDate} ${hours}:${minutes}`;
   };
 
+  const getPendingSales = async() => {
+    const res = await fetch("/api/transactions/pending", {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+  
+      const data = await res.json();
+  
+      if (data.success) { 
+        setPendingSales(data.totalAmount)     
+        console.log(data)
+      } 
+  }
+  const getClearedSales = async() => {
+    const res = await fetch("/api/transactions/cleared", {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+  
+      const data = await res.json();
+  
+      if (data.success) { 
+        setClearedSales(data.totalAmount)     
+        console.log(data)
+      } 
+  }
+
+  useEffect(()=>{
+    getClearedSales()
+    getPendingSales()
+  },[pendingSales])
 
   useEffect(() => {
     getTransactions(page)
   }, [page]);
-
-  useEffect(()=>{
-    const getTotals = async() => {
-      const res = await fetch("/api/transactions/totals", {
-          method: "GET",
-          headers: { "Content-type": "application/json" },
-        });
-    
-        const data = await res.json();
-    
-        if (data.success) { 
-          setClearedSales(data.clearedsales)  
-          setPendingSales(data.pendingsales)     
-          setTotalSales(data.clearedsales+data.pendingsales)
-
-          console.log(data)
-        } 
-    }
-    getTotals()
-  })
 
   const handlePreviousPage = () => {
     if (page > 1) {
@@ -109,7 +120,7 @@ export default function TransactionTable() {
       <div className="flex w-full justify-end gap-8 mb-4">
         <DashboardCard value={`USD${pendingSales.toFixed(2)}`} product={"Pending Sales"} />
         <DashboardCard value={`USD${clearedSales.toFixed(2)}`} product={"Cleared Sales"} />
-        <DashboardCard value={`USD${totalSales.toFixed(2)}`} product={"Total Sales"} />
+        <DashboardCard value={`USD${(clearedSales+pendingSales).toFixed(2)}`} product={"Total Sales"} />
       </div>
       <div className="w-full flex items-center justify-between bg-blue-900 px-4 py-1">
         <h1 className="text-sm text-white font-semibold">Transactions</h1>
