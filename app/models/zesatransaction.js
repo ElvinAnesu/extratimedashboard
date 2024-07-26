@@ -1,16 +1,12 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose,{Schema} from "mongoose";
 
-const transactionSchema = new Schema({
-    transaction : {
-        type : String,
+const airtimetransactionSchema = new Schema({
+    executedby : {
+        type: String,
         required: true
     },
-    username : {
-        type : String,
-        required: true
-    },
-    userid : {
-        type : String,
+    executerid: {
+        type: String,
         required: true
     },
     currency : {
@@ -23,7 +19,7 @@ const transactionSchema = new Schema({
     },
     issuccessful : {
         type : Boolean,
-        required: true
+        default:false,
     },
     cleared : {
         type : Boolean,
@@ -37,9 +33,8 @@ const transactionSchema = new Schema({
         type : {},
         default:{}
     }
-
 },{timestamps : true})
 
-const Transaction = mongoose.models.Transaction || mongoose.model("Transaction", transactionSchema)
+const Airtimetransaction = mongoose.models.Airtimetransaction || mongoose.model("Airtimetransaction", airtimetransactionSchema)
 
-export default Transaction
+export default Airtimetransaction
