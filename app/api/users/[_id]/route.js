@@ -38,11 +38,11 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req,{params}){
-  const {_id} = params
-  try{
-    connectdb()
-    const user = await User.findOne({_id})
+export async function GET(req, { params }) {
+  const { _id } = params;
+  try {
+    await connectdb();
+    const user = await User.findOne({ _id });
     if (!user) {
       return NextResponse.json({
         message: "User not found!",
@@ -55,10 +55,67 @@ export async function GET(req,{params}){
       message: "User fetched successfully",
       success: true,
     });
-  }catch(error){
+  } catch (error) {
     return NextResponse.json({
       error,
-      message: "Error in fetching users",
+      message: "Error in fetching user",
+      success: false,
+    });
+  }
+}
+
+export async function PUT(req, { params }) {
+  const { _id } = params;
+  const { surname, firstname, phonenumber, email, role, supervisor, location } = await req.json();
+
+  try {
+    await connectdb();
+    const updatedUser = await User.findOneAndUpdate({ _id }, { surname, firstname, phonenumber, email, role, supervisor, location });
+
+    if (!updatedUser) {
+      return NextResponse.json({
+        message: "User not found or update failed!",
+        success: false,
+      });
+    }
+
+    return NextResponse.json({
+      user: updatedUser,
+      message: "User updated successfully",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      error,
+      message: "Error in updating user",
+      success: false,
+    });
+  }
+}
+
+export async function DELETE(req, { params }) {
+  const { _id } = params;
+
+  try {
+    await connectdb();
+    const deletedUser = await User.findOneAndDelete({ _id });
+
+    if (!deletedUser) {
+      return NextResponse.json({
+        message: "User not found or delete failed!",
+        success: false,
+      });
+    }
+
+    return NextResponse.json({
+      user: deletedUser,
+      message: "User deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      error,
+      message: "Error in deleting user",
       success: false,
     });
   }

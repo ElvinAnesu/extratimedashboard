@@ -42,6 +42,9 @@ export default function UsersTable() {
       setDeletedialogtitle("Success");
       setDeletedialogmsg(data.message);
       setShowdeletedialog(true);
+
+      // Remove the deleted user from the state
+      setUsers(users.filter(user => user._id !== deleteuser));
     } else {
       setDeletedialogtitle("Failed");
       setDeletedialogmsg(data.message);
@@ -119,7 +122,7 @@ export default function UsersTable() {
                     className="bg-red-600 p-1 rounded flex items-center justify-center text-white"
                     onClick={() => confirmDelete(user._id)}
                   >
-                    <TrashIcon />
+                    <TrashIcon/>
                   </button>
                 </div>
               </td>

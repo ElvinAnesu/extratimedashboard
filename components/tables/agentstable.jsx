@@ -103,7 +103,7 @@ export default function AgentsTable() {
 
   useEffect(() => {
     getUsers(page);
-  }, [page]);
+  },);
 
   const handlePreviousPage = () => {
     if (page > 1) {

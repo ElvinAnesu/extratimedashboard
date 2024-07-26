@@ -17,7 +17,7 @@ export default function Locations(){
     const [showDialog, setShowdialog] = useState()
 
     const addLocation = async() => {
-        const res = await fetch("http://localhost:3000/api/locations",{
+        const res = await fetch("/api/locations",{
             method:"POST",
             headers:{"Content-type":"application/json"},
             body : JSON.stringify({

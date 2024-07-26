@@ -108,9 +108,10 @@ export default function ViewAdmin({params}){
         setShowdialog(false)
         window.location.reload()
     }
-
-    useEffect(()=>{
+    useState(()=>{
         getUser()
+    },[])
+    useEffect(()=>{
         getLocations()
         getSupervisors()
     },[])

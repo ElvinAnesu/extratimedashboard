@@ -18,7 +18,7 @@ export default function Settings(){
                         <PlusIcon />Add New
                     </button>
                 </div>
-                <UsersTable />
+                <UsersTable />3
             </div>
         </div>
     )

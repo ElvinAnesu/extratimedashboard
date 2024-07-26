@@ -35,7 +35,7 @@ export default function Dashboard(){
         if (!token) {
             router.push("/")
         }
-    }, []);
+    });
 
     useEffect(()=>{
         getSales()
