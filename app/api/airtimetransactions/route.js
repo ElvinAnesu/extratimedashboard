@@ -62,7 +62,8 @@ export async function POST(req){
        }
        return NextResponse.json({
             success:true,
-            message:"transaction logged successfully"
+            message:"transaction logged successfully",
+            transaction
         })
     }catch(error){
         return NextResponse.json({
