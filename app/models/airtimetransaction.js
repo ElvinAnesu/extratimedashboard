@@ -1,6 +1,6 @@
 import mongoose,{Schema} from "mongoose";
 
-const zesatransactionSchema = new Schema({
+const airtimetransactionSchema = new Schema({
     executedby : {
         type: String,
         required: true
@@ -35,6 +35,6 @@ const zesatransactionSchema = new Schema({
     }
 },{timestamps : true})
 
-const Zesatransaction = mongoose.models.Zesatransaction || mongoose.model("Zesatransaction", zesatransactionSchema)
+const Airtimetransaction = mongoose.models.Airtimetransaction || mongoose.model("Airtimetransaction", airtimetransactionSchema)
 
-export default Zesatransaction
+export default Airtimetransaction
