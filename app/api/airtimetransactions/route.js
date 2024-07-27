@@ -74,10 +74,10 @@ export async function POST(req){
 }
 
 export async function PUT(req){
-    const {_id} = await req.json()
+    const {_id, extras} = await req.json()
     try{
         connectdb()
-        const transaction = await Airtimetransaction.findOneAndUpdate({_id},{issuccessful:true})
+        const transaction = await Airtimetransaction.findOneAndUpdate({_id},{issuccessful:true, extras:extras })
         if(!transaction){
             return NextResponse.json({
                 success:false,
