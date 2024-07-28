@@ -2,7 +2,7 @@ import connectdb from "@/mongodb"
 import { NextResponse } from "next/server"
 import User from "@/app/models/user"
 import Airtimetransaction from "@/app/models/airtimetransaction"
-
+import bcrypt from "bcrypt"
 
 //get user transactions
 export async function GET(req,{params}){
