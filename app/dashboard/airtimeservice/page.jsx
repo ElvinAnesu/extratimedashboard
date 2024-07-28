@@ -3,17 +3,25 @@ import BuyAirtimeForm from "@/components/forms/buyairtimeform"
 import LoadAirtimeVouuchersForm from "@/components/forms/loadairtimevouchersform"
 import Header from "@/components/header"
 import AirtimeBalancesTable from "@/components/tables/airtimebalancestable"
+import AirtimeTransactionTable from "@/components/tables/airtimetransactions"
 import TransactionTable from "@/components/tables/transactionstable"
 import { useState } from "react"
 
 export default function AirtimeService(){
 
-    const [showTab, setShowtab] = useState("balances")
+    const [showTab, setShowtab] = useState("new")
+    
 
     return(
         <div className="w-full h-full flex flex-col gap-4 bg-white">
             <Header title="Econet Airtime" />
-            <TransactionTable />
+            <div className="flex items-center justify-end">
+                <button className={`${showTab=="new"? "bg-blue-900" :"bg-gray-400"} px-4 text-xs font-semibold text-white`}
+                    onClick={()=> setShowtab("new")}>New</button>
+                <button className={`${showTab=="legacy"? "bg-blue-900" :"bg-gray-400"} px-4 text-xs font-semibold text-white`}
+                 onClick={()=> setShowtab("legacy")}>Legacy</button>
+            </div>
+            {showTab == "legacy"? <TransactionTable /> : <AirtimeTransactionTable />}
         </div>
     )
 }
