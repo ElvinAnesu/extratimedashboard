@@ -18,6 +18,7 @@ export async function GET(req,{params}){
         return NextResponse.json({
             success:true,
             message:"transactions fetched successfully",
+            transactions,
         })
     }catch(error){
         return NextResponse.json({
