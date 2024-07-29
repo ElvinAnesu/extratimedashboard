@@ -17,15 +17,15 @@ export async function PUT(req){
                 success:false,
                 message:"failed to change password"
             })
-        }
+        } 
         return NextResponse.json({
-            success:true,
+            success:true, 
             message:"password updated successfully"
         })
     }catch(error){
         return NextResponse.json({
             error,
-            message: "failed to change password",
+            message: "failed to change pasword",
             success: false
         })
     }

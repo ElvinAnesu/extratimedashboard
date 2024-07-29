@@ -38,6 +38,7 @@ export async function POST(req) {
   }
 }
 
+//get a single user
 export async function GET(req,{params}){
   const {_id} = params
   try{
@@ -61,5 +62,41 @@ export async function GET(req,{params}){
       message: "Error in fetching users",
       success: false,
     });
+  }
+}
+
+//update user
+export async function PUT(req,{params}){
+  const {_id} = params
+  const { email, surname, firstname, phonenumber, location, supervisor, role} = await req.json()
+  try{
+    connectdb()
+    const user = await User.findOneAndUpdate({_id},{
+        email,
+        surname,
+        firstname,
+        phonenumber,
+        location,
+        supervisor,
+        role
+    })
+    if(!user){
+      return NextResponse.json({
+        success:false,
+        message:"failed to update user"
+      })
+    }
+    return NextResponse.json({ 
+      success:true,
+      message:"user updated successfully",
+      user,
+    })
+  }catch(error){
+    console.log(error)
+    return NextResponse.json({ 
+      success:false,
+      message:"Error updating user",
+      error
+    })
   }
 }
