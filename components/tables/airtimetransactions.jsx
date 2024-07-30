@@ -94,9 +94,22 @@ export default function AirtimeTransactionTable() {
       } 
   }
 
+  const getTotals = async()=>{
+    const res = await fetch("/api/airtimetransactions/totals",{
+      method:"GET",
+      headers:{"Content-type":"application/json"}
+    })
+
+    const data = await res.json()
+
+    if(data.success){
+      setClearedSales(data.clearedsales)
+      setPendingSales(data.pendingsales)
+    }
+  }
+
   useEffect(()=>{
-    getClearedSales()
-    getPendingSales()
+    getTotals()
   },[pendingSales])
 
   useEffect(() => {

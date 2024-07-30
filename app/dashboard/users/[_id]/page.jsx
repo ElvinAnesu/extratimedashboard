@@ -1,9 +1,9 @@
-"use client";
-import Header from "@/components/header";
-import { useEffect, useState } from "react";
-import { Pencil2Icon } from "@radix-ui/react-icons";
-import AlertDialog from "@/components/dialogs/alertdialog";
-
+"use client"
+import Header from "@/components/header"
+import { useEffect, useState } from "react"
+import { Pencil2Icon, LockClosedIcon } from "@radix-ui/react-icons"
+import AlertDialog from "@/components/dialogs/alertdialog"
+import ResetPinDialog from "@/components/dialogs/resetpindialog"
 
 
 export default function ViewAdmin({params}){ 
@@ -119,10 +119,14 @@ export default function ViewAdmin({params}){
     return(
         <div className="w-full h-full flex flex-col gap-4">
             <Header title="User Profile" />
-            <div className="flex items-center justify-end">
+            <div className="flex items-center gap-4 justify-end">
                 <button className="flex items-center justify-center gap-2 bg-blue-900 rounded p-2 text-white"
                     onClick={editUser}>
                     <Pencil2Icon />Edit
+                </button>
+                <button className="flex items-center justify-center gap-2 bg-blue-900 rounded p-2 text-white"
+                    onClick={()=> router.push("/dashboard/users/resetpin")}>
+                    <LockClosedIcon />Reset Pin
                 </button>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -225,6 +229,7 @@ export default function ViewAdmin({params}){
             </div>
 
             {showdialog && <AlertDialog title={dialogtitle} message={dialogmsg} onOk={onOk}/>}
+            <ResetPinDialog />
         </div>
     )
 }

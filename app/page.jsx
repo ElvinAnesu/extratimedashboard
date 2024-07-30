@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen max-w-screen flex items-center justify-center bg-gray-200">
-      <div className="bg-white rounded-lg w-3/4 p-16 grid grid-cols-2 gap-16">
+      <div className="bg-white rounded-lg w-3/4 p-16 flex flex-col md:grid md:grid-cols-2 gap-16">
         <div className="flex items-center justify-center">
           <img src="/logo.png" alt="logo" />
         </div>
