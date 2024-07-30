@@ -43,9 +43,9 @@ export default function Sidebar(){
                         </Link>
                     </li>
                     <li>
-                        <Link href="/dashboard/agents" className="flex items-center gap-2">
+                        <Link href="/dashboard/agenttransactions" className="flex items-center gap-2">
                             <PersonIcon />
-                            Agents
+                            Agents    
                         </Link>
                     </li>
                     <li>

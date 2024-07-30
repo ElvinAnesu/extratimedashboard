@@ -229,7 +229,7 @@ export default function ViewAdmin({params}){
             </div>
 
             {showdialog && <AlertDialog title={dialogtitle} message={dialogmsg} onOk={onOk}/>}
-            <ResetPinDialog />
+            {/* <ResetPinDialog /> */}
         </div>
     )
 }
