@@ -67,32 +67,8 @@ export default function AirtimeTransactionTable() {
     return `${formattedDate} ${hours}:${minutes}`;
   };
 
-  const getPendingSales = async() => {
-    const res = await fetch("/api/transactions/pending", {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      });
   
-      const data = await res.json();
   
-      if (data.success) { 
-        setPendingSales(data.totalAmount)     
-        console.log(data)
-      } 
-  }
-  const getClearedSales = async() => {
-    const res = await fetch("/api/transactions/cleared", {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      });
-  
-      const data = await res.json();
-  
-      if (data.success) { 
-        setClearedSales(data.totalAmount)     
-        console.log(data)
-      } 
-  }
 
   const getTotals = async()=>{
     const res = await fetch("/api/airtimetransactions/totals",{
