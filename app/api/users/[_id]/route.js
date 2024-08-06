@@ -100,3 +100,22 @@ export async function PUT(req,{params}){
     })
   }
 }
+//delete user
+export async function DELETE(req,{params}) {
+  const {_id} = params
+  try{
+    connectdb()
+    await User.findOneAndDelete({_id:_id});
+    return NextResponse.json({ 
+      success:true,
+      message:"User deleted successfully",
+    })
+  }catch(error){
+    console.log(error)
+    return NextResponse.json({ 
+      success:false,
+      message:"Error deleting user",
+    })
+  }
+  
+}
