@@ -1,10 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import ConfirmDelete from "../dialogs/confirmdelete";
+import { EyeOpenIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
 
 const PAGE_SIZE = 10;
 
 export default function SupervisorsTable() {
+
+  const router = useRouter()
+
   const [showdialog, setShowdialog] = useState(false);
   const [users, setUsers] = useState([]);
   const [agnetsData, setAgentsData] = useState({});
@@ -60,6 +65,9 @@ export default function SupervisorsTable() {
     }
   }
 
+  const viewSupervisor = (_id) => {
+    router.push(`/dashboard/supervisors/${_id}`)
+  }
   
 
   useEffect(() => {
@@ -87,7 +95,7 @@ export default function SupervisorsTable() {
             <td className="border border-white px-1">Agent name</td>
             <td className="border border-white px-1">Phone Number</td>
             <td className="border border-white px-1">Email</td>
-            <td className="border border-white px-1">Supervised Agents</td>
+            <td className="border border-white px-1">Action</td>
           </tr>
           {users.map((user, i) => (
             <tr className="" key={i}>
@@ -96,7 +104,10 @@ export default function SupervisorsTable() {
               <td className="border-b border px-1">{user.phonenumber}</td>
               <td className="border-b border px-1">{user.email}</td>
               <td className="border-b border px-1">
-                {agnetsData[user._id] ? agnetsData[user._id].agents : "Loading..."}
+                <button className="bg-blue-600 p-1 rounded flex items-center justify-center text-white"
+                onClick={() => viewSupervisor(user._id)}>
+                  <EyeOpenIcon />
+                </button>
               </td>
             </tr>
           ))}
