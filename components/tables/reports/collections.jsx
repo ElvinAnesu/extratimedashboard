@@ -109,7 +109,7 @@ export default function CollectionsReport(){
                     <td className="px-4 flex">{record.supervisorname}</td>
                     <td className="px-4">{record.usdcollected.toFixed(2)}</td>
                     <td className="px-4">{record.zigcollected.toFixed(2)}</td>
-                    <td className="px-4">{`${startdate} to ${enddate}`}</td>
+                    <td className="px-4">{startdate != undefined && enddate !== undefined ? `${startdate} to ${enddate}`: "All Time"}</td>
                 </tr>
             ))}
             </tbody>
