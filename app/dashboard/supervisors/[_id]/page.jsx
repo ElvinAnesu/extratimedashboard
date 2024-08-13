@@ -13,8 +13,24 @@ export default function SupervisorInfo({ params }) {
   const [todaysCollections, setTodaysCollections] = useState(0);
   const [totalCollections, setTotalCollections] = useState(0);
 
+  const getTotal = async() => { 
+    const response  = await fetch("/api/airtimetransactions/totals/supervisors",{ 
+      method: "POST",
+      headers : {"Content-Type":"application/json"},
+      body:JSON.stringify({ 
+        _id: _id
+      })
+    })
+
+    const data = await response.json()
+
+    if(data.success){
+      setTotalCollections(data.totalcollections)
+    }  
+  }
+
   useEffect(()=>{
-  
+    getTotal()
   },[])
 
   return (

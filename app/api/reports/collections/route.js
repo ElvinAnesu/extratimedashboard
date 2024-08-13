@@ -38,29 +38,6 @@ export async function GET(params) {
                 zigcollected: zigtotal
             })
         }
-    //     const transactions = await Airtimetransaction.find({cleared: true, issuccessful:true})
-    //     if(!transactions){
-    //         return NextResponse.json({
-    //             success: false,
-    //             message:"Transactions not found"
-    //         })
-    //     }
-    //     //update the list of people who have collected some cash
-    //    await transactions.forEach(transaction => {
-    //         if(!supervisors_ids.includes(transaction.clearedby)){
-    //             supervisors_ids.push(transaction.clearedby)
-    //         }
-    //     });
-
-    //     //get the supervisor names and their respective collected totals
-    //     const supervisornames = await User.find({_id: {$in : supervisors_ids}}) 
-
-    //     //calculate totals
-    //     await transactions.forEach(transaction => {
-    //         if(!supervisors_ids.includes(transaction.clearedby)){
-    //             supervisors_ids.push(transaction.clearedby)
-    //         }
-    //     });
 
         return NextResponse.json({ 
             success: true,
