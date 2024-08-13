@@ -3,104 +3,49 @@ import Header from "@/components/header";
 import DashboardCard from "@/components/cards/dashboardcards";
 import { useEffect, useState } from "react";
 
-const PAGE_SIZE = 5; // Adjust page size as needed
 
 export default function SupervisorInfo({ params }) {
   const { _id } = params;
   const [oustandingCollections, setOutstandingCollections] = useState(0);
   const [todaysCollections, setTodaysCollections] = useState(0);
   const [totalCollections, setTotalCollections] = useState(0);
-  const [page, setPage] = useState(1);
-  const [users, setUsers] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [salesData, setSalesData] = useState({});
-  const [error, setError] = useState(null);
+  const [agents, setAgents] = useState([])
+  const [errormsg, setErrormsg] = useState()
+  const [fetchingagents, setFetchingagents] = useState(false)
+  const [page, setPage] = useState(0)
 
-  // State variables for pagination limits
-  const [lowerLimit, setLowerLimit] = useState(0);
-  const [upperLimit, setUpperLimit] = useState(PAGE_SIZE);
+  const getAgents = async() => {
+    setFetchingagents(true)
+    const response = await fetch("/api/supervisors/agents",{
+      method:"POST",
+      headers:{"Content-Type":"appplication/json"},
+      body : JSON.stringify({
+        supervisor : _id
+      })
+    })
 
-  // Fetch agents data with pagination
-  const getAgents = async (page = 1) => {
-    try {
-      const res = await fetch("/api/supervisors/agents", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          supervisor: _id,
-          page,
-          pageSize: PAGE_SIZE,
-        }),
-      });
+    const data = await response.json()
 
-      const data = await res.json();
-
-      if (data.success) {
-        setUsers(data.agents);
-        setTotal(data.total);
-        console.log(data);
-
-        // Fetch sales data for each user
-        data.agents.forEach(user => {
-          getTotalSalesForUser(user._id);
-        });
-      } else {
-        console.log("Error fetching users");
-        setError("Error fetching users");
-      }
-    } catch (error) {
-      console.error("Error fetching agents:", error);
-      setError("Error fetching agents");
+    if(data.success){
+      setAgents(data.agents)
+      setFetchingagents(false)
+    }else{
+      setErrormsg(data.message)
+      setFetchingagents(false)
     }
-  };
+  }
 
-  // Fetch sales data for a specific user
-  const getTotalSalesForUser = async (userid) => {
-    try {
-      const res = await fetch(`/api/transactions/totals/${userid}`, {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      });
+  const nextpage = () => {
 
-      const data = await res.json();
+  }
 
-      if (data.success) {
-        setSalesData(prevSalesData => ({
-          ...prevSalesData,
-          [userid]: {
-            pending: data.pendingsales,
-            cleared: data.clearedsales + data.pendingsales,
-          },
-        }));
-      } else {
-        setError(`Error fetching sales data for user ${userid}`);
-      }
-    } catch (error) {
-      console.error(`Error fetching sales data for user ${userid}:`, error);
-      setError(`Error fetching sales data for user ${userid}`);
-    }
-  };
+  const prevpage = () => {
 
-  useEffect(() => {
-    getAgents(page);
+  }
 
-    // Update pagination limits based on the current page and PAGE_SIZE
-    setLowerLimit((page - 1) * PAGE_SIZE);
-    setUpperLimit(Math.min(page * PAGE_SIZE, users.length));
-  }, [page, users]);
-
-  // Handle page change
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(prevPage => prevPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (page * PAGE_SIZE < total) {
-      setPage(prevPage => prevPage + 1);
-    }
-  };
+  useEffect(()=>{
+    getAgents()
+  },[])
 
   return (
     <div className="w-full h-full flex flex-col gap-4">
@@ -111,49 +56,48 @@ export default function SupervisorInfo({ params }) {
           <DashboardCard value={`USD${todaysCollections.toFixed(2)}`} product={"Today's Collections"} />
           <DashboardCard value={`USD${totalCollections.toFixed(2)}`} product={"Total Collections"} />
         </div>
-        <div className="flex flex-col w-full">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-200 font-semibold">
-                <th className="border border-white px-1">#</th>
-                <th className="border border-white px-1">Agent Name</th>
-                <th className="border border-white px-1">Phone Number</th>
-                <th className="border border-white px-1">Machine Number</th>
-                <th className="border border-white px-1">Location</th>
-                <th className="border border-white px-1">Cash In Hand</th>
-                <th className="border border-white px-1">Total Sales</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.slice(lowerLimit, upperLimit).map((user, i) => (
-                <tr key={user._id}>
-                  <td className="border-b border px-1">{lowerLimit + i + 1}</td>
-                  <td className="border-b border px-1">{`${user.firstname} ${user.surname}`}</td>
-                  <td className="border-b border px-1">{user.phonenumber}</td>
-                  <td className="border-b border px-1">{""}</td>
-                  <td className="border-b border px-1">{user.location}</td>
-                  <td className="border-b border px-1">
-                    {salesData[user._id] ? salesData[user._id].pending : "Loading..."}
-                  </td>
-                  <td className="border-b border px-1">
-                    {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
-                  </td>
+        {
+          fetchingagents? (
+            <div className="w-full flex items-center justify-center p-8">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          ):( 
+            <table className="w-full">
+              <tbody>
+                <tr className="bg-gray-200 font-semibold text-sm">
+                  <td className="border border-white px-1">#</td>
+                  <td className="border border-white px-1">Agent name</td>
+                  <td className="border border-white px-1">Phone Number</td>
+                  <td className="border border-white px-1">Location</td>
+                  <td className="border border-white px-1">Machine Number</td>
+                  <td className="border border-white px-1">Cash In hand</td>
+                  <td className="border border-white px-1">Total Sales</td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <div className="flex justify-between items-center mt-4">
-            <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-500 text-white">
-              Previous
+                {agents.map((agent, index)=>(
+                  <tr className="text-sm" key={index}>
+                    <td className="border border-gray-200 px-1">{index +1}</td>
+                    <td className="border border-gray-200 px-1">{`${agent.surname} ${agent.firstname}`}</td>
+                    <td className="border border-gray-200 px-1">{agent.phonenumber}</td>
+                    <td className="border border-gray-200 px-1">{agent.location}</td>
+                    <td className="border border-gray-200 px-1">{agent.machinenumber? agent.machinenumber: ""}</td>
+                    <td className="border border-gray-200 px-1"></td>
+                    <td className="border border-gray-200 px-1"></td>
+                </tr>
+                ))}
+              </tbody>
+            </table>
+          )
+        }
+      </div>
+      <div className="w-full flex justify-between items-center mt-4">
+            <button onClick={prevpage}  className="px-4 py-2 bg-blue-500 text-white">
+              Prev
             </button>
             <span className="text-sm">Page {page}</span>
-            <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-500 text-white">
+            <button onClick={nextpage}  className="px-4 py-2 bg-blue-500 text-white">
               Next
             </button>
           </div>
-        </div>
-      </div>
     </div>
   );
 }
