@@ -33,7 +33,7 @@ export default function SupervisorAgentsTable({supervisor}) {
       setUsers(data.users);
       setTotal(data.total);
       // Fetch sales data for each user
-      await data.users.forEach(user => {
+      data.users.forEach(user => {
         getTotalSalesForUser(user._id);
       });
       setIsfetching(false)
@@ -43,7 +43,7 @@ export default function SupervisorAgentsTable({supervisor}) {
   };
 
   const getTotalSalesForUser = async (userid) => {
-    const res = await fetch(`/api/transactions/totals/${userid}`, {
+    const res = await fetch(`/api/airtimetransactions/totals/${userid}`, {
       method: "GET",
       headers: { "Content-type": "application/json" },
     });
