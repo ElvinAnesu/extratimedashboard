@@ -1,19 +1,21 @@
-"use client";
-import Header from "@/components/header";
-import DashboardCard from "@/components/cards/dashboardcards";
-import { useEffect, useState } from "react";
-import SupervisorAgentsTable from "@/components/tables/supervisoragentstable";
+"use client"
+import Header from "@/components/header"
+import DashboardCard from "@/components/cards/dashboardcards"
+import { useEffect, useState } from "react"
+import SupervisorAgentsTable from "@/components/tables/supervisoragentstable"
 
 
 const PAGE_SIZE = 8
 
 export default function SupervisorInfo({ params }) {
   const { _id } = params;
-  const [oustandingCollections, setOutstandingCollections] = useState(0);
-  const [todaysCollections, setTodaysCollections] = useState(0);
-  const [totalCollections, setTotalCollections] = useState(0);
+  const [oustandingCollections, setOutstandingCollections] = useState(0)
+  const [todaysCollections, setTodaysCollections] = useState(0)
+  const [totalCollections, setTotalCollections] = useState(0)
+  const [fetchingtotal, setFetchiingtotal] = useState(false)
 
   const getTotal = async() => { 
+    setFetchiingtotal(true)
     const response  = await fetch("/api/airtimetransactions/totals/supervisors",{ 
       method: "POST",
       headers : {"Content-Type":"application/json"},
@@ -26,6 +28,9 @@ export default function SupervisorInfo({ params }) {
 
     if(data.success){
       setTotalCollections(data.totalcollections)
+      setFetchiingtotal(false)
+    }else{
+      setFetchiingtotal(false)
     }  
   }
 
@@ -40,7 +45,7 @@ export default function SupervisorInfo({ params }) {
         <div className="flex w-full gap-4 justify-end">
           <DashboardCard value={`USD${oustandingCollections.toFixed(2)}`} product={"Outstanding Collections"} />
           <DashboardCard value={`USD${todaysCollections.toFixed(2)}`} product={"Today's Collections"} />
-          <DashboardCard value={`USD${totalCollections.toFixed(2)}`} product={"Total Collections"} />
+          <DashboardCard value={fetchingtotal ? "Fetching..." : `USD${totalCollections.toFixed(2)}`} product={"Total Collections"} />
         </div>
         <SupervisorAgentsTable supervisor={_id} />
       </div>      
