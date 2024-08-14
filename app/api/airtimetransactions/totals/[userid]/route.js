@@ -20,7 +20,7 @@ export async function GET(req,{params}){
         transactions.forEach((transaction) => {
             if (transaction.cleared && transaction.issuccessful) {
             _clearedsales += transaction.extras.amount
-                if(transaction.cashedin){
+                if(!transaction.cashedin){
                    _notcashedin = _notcashedin +  transaction.extras.amount
                 }
             } else if(!transaction.cleared && transaction.issuccessful){

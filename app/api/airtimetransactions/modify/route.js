@@ -7,8 +7,8 @@ export async function PUT(req){
     try{
         connectdb()
         const transaction = await Airtimetransaction.updateMany(
-            { cashedin: { $exists: false } }, // Find documents without the 'cashedin' attribute
-            { $set: { cashedin: false } } 
+            { cleared: false },
+            { cashedin: false }
         )
         if(!transaction){
             return NextResponse.json({
