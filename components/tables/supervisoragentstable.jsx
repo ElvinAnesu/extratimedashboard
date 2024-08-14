@@ -56,6 +56,7 @@ export default function SupervisorAgentsTable({supervisor}) {
         [userid]: {
           pending: data.pendingsales,
           cleared: data.clearedsales + data.pendingsales,
+          notcahsedin: data.notcahsedin
         },
       }));
     } else {
@@ -111,7 +112,9 @@ export default function SupervisorAgentsTable({supervisor}) {
                   <td className="border-b border px-1">
                     {salesData[user._id] ? salesData[user._id].pending : "Loading..."}
                   </td>
-                  <td className="border-b border px-1"></td>
+                  <td className="border-b border px-1">
+                    {salesData[user._id] ? salesData[user._id].notcahsedin : "Loading..."}
+                  </td>
                   <td className="border-b border px-1">
                     {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
                   </td>

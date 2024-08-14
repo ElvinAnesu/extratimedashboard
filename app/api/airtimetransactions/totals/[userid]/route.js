@@ -13,13 +13,18 @@ export async function GET(req,{params}){
                 message: "Transactions not found"
             })
         }
-        let _clearedsales = 0;
-        let _pendingsales = 0;
+        let _clearedsales = 0
+        let _pendingsales = 0
+        let _notcashedin  = 0
+
         transactions.forEach((transaction) => {
             if (transaction.cleared && transaction.issuccessful) {
-            _clearedsales += transaction.extras.amount;
+            _clearedsales += transaction.extras.amount
+                if(transaction.cashedin){
+                   _notcashedin = _notcashedin +  transaction.extras.amount
+                }
             } else if(!transaction.cleared && transaction.issuccessful){
-            _pendingsales += transaction.extras.amount;
+            _pendingsales += transaction.extras.amount
             }
         });
         return NextResponse.json({
@@ -27,6 +32,7 @@ export async function GET(req,{params}){
             transactions,
             clearedsales: _clearedsales,
             pendingsales: _pendingsales,
+            notcahsedin: _notcashedin,
             message:"totals fetched successfully"
         })
     }catch(error){
