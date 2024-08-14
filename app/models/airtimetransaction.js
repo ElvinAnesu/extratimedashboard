@@ -29,6 +29,10 @@ const airtimetransactionSchema = new Schema({
         type : String,
         default: null
     },
+    cashedin : {
+        type : Boolean,
+        default: false
+    },
     extras : {
         type : {},
         default:{}
