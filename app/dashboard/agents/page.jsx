@@ -14,7 +14,7 @@ export default function Agents(){
             <Header title="Agents" />
             <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-start">
-                    <h1>filters:</h1>
+                    <h1>F:</h1>
                 </div>
                 <AgentsTable />
             </div>
