@@ -184,6 +184,40 @@ export default function ViewAdmin({params}){
                     </select>}
                 </div>
 
+                <div className="flex flex-col gap-2 w-full">
+                    <h1 className="text-xs font-semibold">Machine Phone Number</h1>
+                    <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                        placeholder="Phone Number"
+                        type="text" 
+                        disabled={edit}
+                        />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <h1 className="text-xs font-semibold">Adress</h1>
+                    <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                        placeholder="Residental adress"
+                        type="text" 
+                        disabled={edit}
+                        />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <h1 className="text-xs font-semibold">Next Of Kin</h1>
+                    <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                        placeholder="Next of Kin"
+                        type="text" 
+                        disabled={edit}
+                        />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <h1 className="text-xs font-semibold">Next Of Kin Phone Number</h1>
+                    <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                        placeholder="Phone Number"
+                        type="text" 
+                        disabled={edit}
+                        />
+                </div>
+                
+
                 {role === "agent" &&
                     <div className="flex flex-col gap-2 w-full">
                         <h1 className="text-xs font-semibold">Supervisor</h1>
