@@ -1,7 +1,9 @@
 // components/AgentsTable.js
 "use client";
 import { useEffect, useState } from "react";
+import { Cross1Icon } from "@radix-ui/react-icons";
 const PAGE_SIZE = 10;
+
 
 export default function SupervisorAgentsTable({supervisor}) {
 
@@ -11,7 +13,8 @@ export default function SupervisorAgentsTable({supervisor}) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [isfetching, setIsfetching] = useState(false)
-  
+  const [showClearmodal, setShowClearmodal] = useState(false)
+
   const getAgents= async (page = 1) => {
     setIsfetching(true)
     console.log(isfetching)
@@ -109,7 +112,10 @@ export default function SupervisorAgentsTable({supervisor}) {
                     {salesData[user._id] ? salesData[user._id].pending : "Loading..."}
                   </td>
                   <td className="border-b border px-1">
-                    {salesData[user._id] ? salesData[user._id].notcahsedin : "Loading..."}
+                    <button className="w-full bg-yellow-200"
+                      onClick={()=> setShowClearmodal(true)}>
+                      {salesData[user._id] ? salesData[user._id].notcahsedin : "Loading..."}
+                    </button>
                   </td>
                   <td className="border-b border px-1">
                     {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
@@ -129,6 +135,26 @@ export default function SupervisorAgentsTable({supervisor}) {
           </div>
         </div>
       )}
+
+      { showClearmodal && <div className="w-full h-full absolute flex items-center justify-center top-0">
+          <div className="flex flex-col bg-white p-8 rounded shadow text-sm items-center">
+            <div className="w-full flex items-center justify-end">
+              <button className="p-2 rounded border"
+                onClick={() => setShowClearmodal(false)}>
+                <Cross1Icon />
+              </button>
+            </div>
+            <h1 className="font-semibold">Confirm Cash In</h1>
+            <p className="text-xs">confirm amount to be cleared matches the amount submited by the supervisor</p>
+            <div className="flex flex-col gap-2 m-2">
+              <input className="border rounded border border-gray-900 px-2" 
+                placeholder="email"/>
+              <input className="border rounded border border-gray-900 px-2" 
+                placeholder="password"/>
+              <button className="bg-blue-900 px-2 rounded text-white">Confirm</button>
+            </div>
+          </div>
+      </div>}
     </div>
   )
 }
