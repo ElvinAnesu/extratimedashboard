@@ -65,7 +65,9 @@ export default function SupervisorAgentsTable({supervisor}) {
     }
   };
 
+  const confirmCashin = async() => {
 
+  }
 
   useEffect(() => {
     getAgents(page);
@@ -151,7 +153,10 @@ export default function SupervisorAgentsTable({supervisor}) {
                 placeholder="email"/>
               <input className="border rounded border border-gray-900 px-2" 
                 placeholder="password"/>
-              <button className="bg-blue-900 px-2 rounded text-white">Confirm</button>
+              <button className="bg-blue-900 p-1 rounded text-white"
+                onClick={confirmCashin}>
+                Confirm
+              </button>
             </div>
           </div>
       </div>}

@@ -3,6 +3,7 @@ import Header from "@/components/header"
 import AgentTransactionsTable from "@/components/tables/agenttransactionstable"
 import { useRouter } from "next/navigation"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
+import AgentsTable from "@/components/tables/agentstable"
 
 
 
@@ -34,7 +35,6 @@ export default function AgentsTransactions(){
                             Search
                         </button>
                     </div>
-                
                 </div>
                 <AgentTransactionsTable />
             </div>

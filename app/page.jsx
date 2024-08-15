@@ -46,12 +46,12 @@ export default function Home() {
 
   return (
     <main className="min-h-screen max-w-screen flex items-center justify-center bg-gray-200">
-      <div className="bg-white rounded-lg w-3/4 p-16 flex flex-col md:grid md:grid-cols-2 gap-16">
-        <div className="flex items-center justify-center">
-          <img src="/logo.png" alt="logo" />
+      <div className="bg-gray-100 rounded md:w-1/4 p-2 flex flex-col  gap-2 shadow">
+        <div className="flex items-center justify-center w-full mt-4">
+          <h1 className="text-blue-900 font-semibold text-xl">Extra Time Dashboard</h1>
         </div>
-        <form onSubmit={(e) => {e.preventDefault();login()}} className="flex flex-col items-center justify-center gap-4 p-8">
-          <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+        <form onSubmit={(e) => {e.preventDefault();login()}} className="flex flex-col items-center justify-center gap-4 p-4">
+          <input className="h-9 border rounded border-gray-400 w-full p-2 text-black text-sm"
             placeholder="User email"
             type="text"         
             onChange={(e) => setEmail(e.target.value)}
