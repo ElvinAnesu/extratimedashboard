@@ -95,12 +95,11 @@ export default function SupervisorAgentsTable({supervisor}) {
               <tr className="bg-gray-200 font-semibold">
                 <td className="border border-white px-1">#</td>
                 <td className="border border-white px-1">Agent name</td>
-                <td className="border border-white px-1">Phone Numb</td>
+                <td className="border border-white px-1">Phone Number</td>
                 <td className="border border-white px-1">Location</td>
-                <td className="border border-white px-1">Machine Number</td>
-                <td className="border border-white px-1">Cash in Hand</td>
-                <td className="border border-white px-1">Collected</td>
-                <td className="border border-white px-1">Monthly Sales</td>
+                <td className="border border-white px-1">Cash With Agent</td>
+                <td className="border border-white px-1">Cash With Supervisor</td>
+                <td className="border border-white px-1">Agent Monthly Sales</td>
               </tr>
               {users.map((user, i) => (
                 <tr className="" key={i}>
@@ -108,7 +107,6 @@ export default function SupervisorAgentsTable({supervisor}) {
                   <td className="border-b border px-1">{`${user.firstname} ${user.surname}`}</td>
                   <td className="border-b border px-1">{user.phonenumber}</td>
                   <td className="border-b border px-1">{user.location}</td>
-                  <td className="border-b border px-1"></td>
                   <td className="border-b border px-1">
                     {salesData[user._id] ? salesData[user._id].pending : "Loading..."}
                   </td>
