@@ -13,6 +13,21 @@ export default function SupervisorInfo({ params }) {
   const [todaysCollections, setTodaysCollections] = useState(0)
   const [totalCollections, setTotalCollections] = useState(0)
   const [fetchingtotal, setFetchiingtotal] = useState(false)
+  const [supervisorname, setSupervisorname] = useState()
+
+  const getSupervisordetails = async() => {
+    const response = await fetch(`/api/users/${_id}`,{
+      method: "GET",
+      headers:{"Content-type": "application/json"},
+    })
+
+    const data = await response.json()
+
+    if(data.success){
+      setSupervisorname(`${data.user.firstname} ${data.user.surname}`)
+    }
+  }
+
 
   const getTotal = async() => { 
     setFetchiingtotal(true)
@@ -37,12 +52,13 @@ export default function SupervisorInfo({ params }) {
   }
 
   useEffect(()=>{
+    getSupervisordetails()
     getTotal()
   },[])
 
   return (
     <div className="w-full h-full flex flex-col gap-4">
-      <Header title="Supervisor Analytics" />
+      <Header title={`${supervisorname? supervisorname : ""} analytics`} />
       <div className="flex flex-col items-center justify-center gap-4">
         <div className="flex w-full gap-4 justify-end">
           <DashboardCard value={fetchingtotal? "Fetching..." : `USD${oustandingCollections.toFixed(2)}`} product={"Outstanding Collections"} />

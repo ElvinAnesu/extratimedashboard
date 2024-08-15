@@ -11,9 +11,7 @@ export default function SupervisorAgentsTable({supervisor}) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [isfetching, setIsfetching] = useState(false)
-
-
-
+  
   const getAgents= async (page = 1) => {
     setIsfetching(true)
     console.log(isfetching)
