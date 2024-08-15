@@ -43,7 +43,7 @@ export default function SupervisorInfo({ params }) {
 
     if(data.success){
       setTotalCollections(data.totalcollections)
-      setTodaysCollections(data.collectionstoday)
+      //setTodaysCollections(data.collectionstoday)
       setOutstandingCollections(data.pendingtotal)
       setFetchiingtotal(false)
     }else{
