@@ -1,6 +1,7 @@
 import connectdb from "@/mongodb"
 import { NextResponse } from "next/server"
 import Airtimetransaction from "@/app/models/airtimetransaction"
+import User from "@/app/models/user"
 
 
 export async function POST(req) {
@@ -22,6 +23,22 @@ export async function POST(req) {
                 $gte: startOfDay,
                 $lte: endOfDay,
               },
+        })
+
+        const supervisoragents = await User.find({supervisor: { $regex: _id, $options: 'i' }})
+
+        let agentids = []
+
+        supervisoragents.forEach((agent)=> {
+            agentids.push(agent._id)
+        })
+
+        const agentstransactions = await Airtimetransaction.find({ executerid: { $in: agentids } , cleared: false, issuccessful: true})
+
+        let pendingtotal = 0
+
+        agentstransactions.forEach((transaction) => {
+            pendingtotal = pendingtotal + transaction.extras.amount
         })
 
         if(!transactions){
@@ -47,6 +64,8 @@ export async function POST(req) {
             success:true,
             message:"Transactions fetched successfully",
             totalcollections,
+            pendingtotal,
+            agentstransactions,
             collectionstoday,
             transactions
         })

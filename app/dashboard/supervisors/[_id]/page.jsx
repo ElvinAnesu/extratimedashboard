@@ -29,6 +29,7 @@ export default function SupervisorInfo({ params }) {
     if(data.success){
       setTotalCollections(data.totalcollections)
       setTodaysCollections(data.collectionstoday)
+      setOutstandingCollections(data.pendingtotal)
       setFetchiingtotal(false)
     }else{
       setFetchiingtotal(false)
@@ -44,7 +45,7 @@ export default function SupervisorInfo({ params }) {
       <Header title="Supervisor Analytics" />
       <div className="flex flex-col items-center justify-center gap-4">
         <div className="flex w-full gap-4 justify-end">
-          <DashboardCard value={`USD${oustandingCollections.toFixed(2)}`} product={"Outstanding Collections"} />
+          <DashboardCard value={fetchingtotal? "Fetching..." : `USD${oustandingCollections.toFixed(2)}`} product={"Outstanding Collections"} />
           <DashboardCard value={fetchingtotal? "Fetching ...": `USD${todaysCollections.toFixed(2)}`} product={"Today's Collections"} />
           <DashboardCard value={fetchingtotal ? "Fetching..." : `USD${totalCollections.toFixed(2)}`} product={"Total Collections"} />
         </div>
