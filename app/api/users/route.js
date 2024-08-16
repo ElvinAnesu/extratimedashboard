@@ -3,6 +3,7 @@ import connectdb from "@/mongodb"
 import User from "@/app/models/user"
 import bcrypt from "bcrypt"
 
+
 //create new user
 export async function POST(req){
     const { email, 
@@ -12,8 +13,14 @@ export async function POST(req){
             phonenumber, 
             location, 
             supervisor,
-            role, 
+            role,
+            machinenumber,
+            address,
+            nextofkeen,
+            nextofkeenphonenumber,
             assignedVouchers} = await req.json()
+
+    console.log("data is", email, password, surname)
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds)
@@ -31,7 +38,11 @@ export async function POST(req){
             location, 
             supervisor, 
             role, 
-            assignedVouchers
+            machinenumber,
+            address,
+            nextofkeen,
+            nextofkeenphonenumber,
+            assignedVouchers,
         })
         return NextResponse.json({
             message: "User created successfully",
