@@ -19,7 +19,7 @@ export async function POST(req) {
             clearedby:_id, 
             issuccessful: true, 
             cleared:true,
-            updatedAt: {
+            clearedat: {
                 $gte: startOfDay,
                 $lte: endOfDay,
               },
@@ -33,13 +33,25 @@ export async function POST(req) {
             agentids.push(agent._id)
         })
 
+        // get outstanding collections for supervisor
         const agentstransactions = await Airtimetransaction.find({ executerid: { $in: agentids } , cleared: false, issuccessful: true})
-
         let pendingtotal = 0
-
         agentstransactions.forEach((transaction) => {
             pendingtotal = pendingtotal + transaction.extras.amount
         })
+        //get daily perfomances of supervisors agents
+        const agentstransactionstoday = await Airtimetransaction.find({ 
+            executerid: { $in: agentids } , 
+            issuccessful: true,
+            createdAt: {
+                $gte: startOfDay,
+                $lte: endOfDay,
+            },})
+        let salestotal = 0
+        agentstransactionstoday.forEach((transaction) => {
+            salestotal = salestotal + transaction.extras.amount
+        })
+
 
         if(!transactions){
             return NextResponse.json({ 
@@ -65,6 +77,7 @@ export async function POST(req) {
             message:"Transactions fetched successfully",
             totalcollections,
             pendingtotal,
+            salestotal,
             agentstransactions,
             collectionstoday,
             transactions

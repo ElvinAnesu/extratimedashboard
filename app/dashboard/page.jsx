@@ -21,17 +21,17 @@ export default function Dashboard(){
 
     //supervisortotals
     const [outsandingdenny, setOutstandingdenny] = useState(0)
-    const [collectionstodaydenny, setCollectionstodaydenny] = useState(30)
-    const [agentperfomancedenny, setAgentperformancedenny] = useState(5)
+    const [collectionstodaydenny, setCollectionstodaydenny] = useState(0)
+    const [agentperfomancedenny, setAgentperformancedenny] = useState(0)
     const [outsandingtinashe, setOutstandingtinashe] = useState(0)
-    const [collectionstodaytinashe, setCollectionstodaytinashe] = useState(40)
-    const [agentperfomancedtinashe, setAgentperformancetinashe] = useState(30)
+    const [collectionstodaytinashe, setCollectionstodaytinashe] = useState(0)
+    const [agentperfomancedtinashe, setAgentperformancetinashe] = useState(0)
     const [outsandingjames, setOutstandingjames] = useState(0)
-    const [collectionstodayjames, setCollectionstodayjames] = useState(50)
-    const [agentperfomancejames, setAgentperformancejames] = useState(10)
+    const [collectionstodayjames, setCollectionstodayjames] = useState(0)
+    const [agentperfomancejames, setAgentperformancejames] = useState(0)
     const [outsandingmalcolm, setOutstandingmalcolm] = useState(0)
-    const [collectionstodaymalcolm, setCollectionstodaymalcolm] = useState(50)
-    const [agentperfomancedmalcolm, setAgentperformancemalcolm] = useState(30)
+    const [collectionstodaymalcolm, setCollectionstodaymalcolm] = useState(0)
+    const [agentperfomancedmalcolm, setAgentperformancemalcolm] = useState(0)
 
 
     const getTodaysSales = async() => {
@@ -63,6 +63,8 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingmalcolm(data.pendingtotal)
+          setCollectionstodaymalcolm(data.collectionstoday)
+          setAgentperformancemalcolm(data.salestotal)
         }
       }
 
@@ -79,6 +81,8 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingtinashe(data.pendingtotal)
+          setCollectionstodaytinashe(data.collectionstoday)
+          setAgentperformancetinashe(data.salestotal)
         }
       }
 
@@ -95,6 +99,8 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingdenny(data.pendingtotal)
+          setCollectionstodaydenny(data.collectionstoday)
+          setAgentperformancedenny(data.salestotal)
         }
       }
     
@@ -111,6 +117,8 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingjames(data.pendingtotal)
+          setCollectionstodayjames(data.collectionstoday)
+          setAgentperformancejames(data.salestotal)
         }
       }  
 
