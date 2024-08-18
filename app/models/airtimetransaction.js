@@ -29,6 +29,10 @@ const airtimetransactionSchema = new Schema({
         type : String,
         default: null
     },
+    clearedat:{
+        type: String,
+        default: null
+    },
     cashedin : {
         type : Boolean,
         default: false

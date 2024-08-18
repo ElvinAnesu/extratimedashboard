@@ -87,27 +87,27 @@ export default function UsersTable() {
   };
 
   return (
-    <div className="min-w-full max-h-full overflow-hidden text-sm">
+    <div className="min-w-full max-h-full overflow-hidden text-sm bg-gray-200 rounded p-4">
       <table className="w-full">
         <tbody>
-          <tr className="bg-gray-200">
-            <td className="border border-white px-1">#</td>
-            <td className="border border-white px-1">Surname</td>
-            <td className="border border-white px-1">First Name</td>
-            <td className="border border-white px-1">Role</td>
-            <td className="border border-white px-1">Email</td>
-            <td className="border border-white px-1">Phone Number</td>
-            <td className="border border-white px-1">Action</td>
+          <tr className="bg-blue-900 text-white font-semibold">
+            <td className="px-1">#</td>
+            <td className="px-1">Surname</td>
+            <td className="px-1">First Name</td>
+            <td className="px-1">Role</td>
+            <td className="px-1">Email</td>
+            <td className="px-1">Phone Number</td>
+            <td className="px-1">Action</td>
           </tr>
           {users.map((user, i) => (
-            <tr className="" key={i}>
-              <td className="border-b border px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
-              <td className="border-b border px-1">{user.surname}</td>
-              <td className="border-b border px-1">{user.firstname}</td>
-              <td className="border-b border px-1">{user.role}</td>
-              <td className="border-b border px-1">{user.email}</td>
-              <td className="border-b border px-1">{user.phonenumber}</td>
-              <td className="border-b border px-1">
+            <tr className="border boder-b border-b-gray-300" key={i}>
+              <td className="px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
+              <td className="px-1">{user.surname}</td>
+              <td className="px-1">{user.firstname}</td>
+              <td className="px-1">{user.role}</td>
+              <td className="px-1">{user.email}</td>
+              <td className="px-1">{user.phonenumber}</td>
+              <td className="px-1">
                 <div className="flex gap-2 items-center">
                   <button
                     className="bg-blue-600 p-1 rounded flex items-center justify-center text-white"
@@ -132,7 +132,7 @@ export default function UsersTable() {
         <button
           onClick={handlePreviousPage}
           disabled={page === 1}
-          className="px-4 py-2 bg-blue-500 text-white"
+          className="px-4 py-2 bg-blue-900 text-white rounded"
         >
           Previous
         </button>
@@ -140,7 +140,7 @@ export default function UsersTable() {
         <button
           onClick={handleNextPage}
           disabled={page * PAGE_SIZE >= total}
-          className="px-4 py-2 bg-blue-500 text-white"
+          className="px-4 py-2 bg-blue-900 text-white rounded"
         >
           Next
         </button>

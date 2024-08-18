@@ -1,13 +1,11 @@
-// components/AgentsTable.js
-"use client";
-import { useEffect, useState } from "react";
-import { Cross1Icon } from "@radix-ui/react-icons";
-const PAGE_SIZE = 10;
+"use client"
+import { useEffect, useState } from "react"
+import { Cross1Icon } from "@radix-ui/react-icons"
 
+const PAGE_SIZE = 10
 
 export default function SupervisorAgentsTable({supervisor}) {
 
-  
   const [users, setUsers] = useState([]);
   const [salesData, setSalesData] = useState({});
   const [page, setPage] = useState(1);
@@ -86,7 +84,7 @@ export default function SupervisorAgentsTable({supervisor}) {
   };
 
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full h-full bg-gray-200 p-4 rounded">
       {isfetching? ( 
         <div className="w-full flex items-center justify-center p-8"> 
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
@@ -95,31 +93,31 @@ export default function SupervisorAgentsTable({supervisor}) {
         <div className="min-w-full max-h-full overflow-hidden text-sm">
           <table className="w-full">
             <tbody>
-              <tr className="bg-gray-200 font-semibold">
-                <td className="border border-white px-1">#</td>
-                <td className="border border-white px-1">Agent name</td>
-                <td className="border border-white px-1">Phone Number</td>
-                <td className="border border-white px-1">Location</td>
-                <td className="border border-white px-1">Cash With Agent</td>
-                <td className="border border-white px-1">Cash With Supervisor</td>
-                <td className="border border-white px-1">Agent Monthly Sales</td>
+              <tr className="font-semibold bg-blue-900 text-white">
+                <td className="px-1">#</td>
+                <td className="px-1">Agent name</td>
+                <td className="px-1">Phone Number</td>
+                <td className="px-1">Location</td>
+                <td className="px-1">Cash With Agent</td>
+                <td className="px-1">Cash With Supervisor</td>
+                <td className="px-1">Agent Monthly Sales</td>
               </tr>
               {users.map((user, i) => (
-                <tr className="" key={i}>
-                  <td className="border-b border px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
-                  <td className="border-b border px-1">{`${user.firstname} ${user.surname}`}</td>
-                  <td className="border-b border px-1">{user.phonenumber}</td>
-                  <td className="border-b border px-1">{user.location}</td>
-                  <td className="border-b border px-1">
+                <tr className="border-b border-b-gray-300" key={i}>
+                  <td className="px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
+                  <td className="px-1">{`${user.firstname} ${user.surname}`}</td>
+                  <td className="px-1">{user.phonenumber}</td>
+                  <td className="px-1">{user.location}</td>
+                  <td className="px-1">
                     {salesData[user._id] ? salesData[user._id].pending : "Loading..."}
                   </td>
-                  <td className="border-b border px-1">
-                    <button className="w-full bg-yellow-200"
+                  <td className="px-1">
+                    <button className="w-full"
                       onClick={()=> setShowClearmodal(true)}>
                       {salesData[user._id] ? salesData[user._id].notcahsedin : "Loading..."}
                     </button>
                   </td>
-                  <td className="border-b border px-1">
+                  <td className="px-1">
                     {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
                   </td>
                 </tr>
@@ -127,11 +125,11 @@ export default function SupervisorAgentsTable({supervisor}) {
             </tbody>
           </table>
           <div className="flex justify-between items-center mt-4">
-            <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-500 text-white">
+            <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-900 text-white rounded">
               Previous
             </button>
             <span className="text-sm">Page {page}</span>
-            <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-500 text-white">
+            <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-900 text-white rounded">
               Next
             </button>
           </div>

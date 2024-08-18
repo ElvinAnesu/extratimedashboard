@@ -52,32 +52,32 @@ export default function CollectionsReport(){
     },[])
     
     return ( 
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col bg-gray-200 rounded p-4">
         <div className="flex items-center justify-between mb-8">
-            <div className="flex gap-4">
-                <h1>Report:</h1>
-                <select className="border border-gray-200 rounded px-2">
-                    <option>Collections</option>     
+            <div className="flex items-center gap-2">
+                <h1 className="text-sm text-gray-500">Report:</h1>
+                <select className="border border-gray-300 rounded px-2 py-1 text-sm">
+                    <option>collections</option>     
                 </select>
             </div>
             <div className="flex gap-8">
-                <div className="flex gap-4">
-                    <h1>Start Date:</h1>
+                <div className="flex items-center gap-2">
+                    <h1 className="text-sm text-gray-500">Start Date:</h1>
                     <input
                         type="date"
                         id="date"
                         name="date"
-                        className="border border-gray-300 px-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="border border-gray-300 px-2 text-sm py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         onChange={(e)=> setStartdate(e.target.value)}
                     />
                 </div>
-                <div className="flex gap-4">
-                    <h1>End Date:</h1>
+                <div className="flex items-center gap-2">
+                    <h1 className="text-sm text-gray-500">End Date:</h1>
                     <input
                         type="date"
                         id="date"
                         name="date"
-                        className="border border-gray-300 px-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="border border-gray-300 px-2 text-sm py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         onChange={(e)=> setEnddate(e.target.value)}
                     />
                 </div>
@@ -105,7 +105,7 @@ export default function CollectionsReport(){
                 <td className="px-4">Period</td>
             </tr>
             {report.map((record, index)=> ( 
-                <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-white" key={index}>
+                <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-gray-300" key={index}>
                     <td className="px-4 flex">{record.supervisorname}</td>
                     <td className="px-4">{record.usdcollected.toFixed(2)}</td>
                     <td className="px-4">{record.zigcollected.toFixed(2)}</td>

@@ -15,13 +15,13 @@ export default function DashboardLayout({children}){
         }
     }, []);
     return(
-        <main className="min-h-screen max-w-screen bg-white text-black flex flex-col p-16">
+        <main className="min-h-screen max-w-screen bg-gradient-to-t from-slate-300 via-blue-200 to-blue-900 text-black flex flex-col md:p-8">
             <Topbar />
-            <div className="w-full h-full grid grid-cols-5 mt-8">
-                <div>
+            <div className="w-full h-full md:grid md:grid-cols-5 mt-8">
+                <div className="hidden md:block">
                     <Sidebar />
                 </div>
-                <div className="col-span-4 px-4">
+                <div className="col-span-4 md:px-4">
                     {children}
                 </div>
             </div>

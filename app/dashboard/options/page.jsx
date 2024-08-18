@@ -13,13 +13,13 @@ export default function Options(){
 
             <div className="flex flex-col gap-4">
                 <div className="flex gap-4">
-                    <button className="flex rounded shadow flex-col p-4 bg-gray-100 w-52 h-24 gap-2 items-center justify-center"
+                    <button className="flex rounded shadow flex-col p-4 bg-blue-900 w-52 h-24 gap-2 items-center justify-center"
                         onClick={(e) => router.push("/dashboard/users")}>
-                        <h1 className="text-xl">Users</h1>
+                        <h1 className="text-xl text-white">Users</h1>
                     </button>
-                  <button className="flex rounded shadow flex-col p-4 bg-gray-100 w-52 h-24 gap-2 items-center justify-center"
+                  <button className="flex rounded shadow flex-col p-4 bg-blue-900 w-52 h-24 gap-2 items-center justify-center"
                         onClick={(e) => router.push("/dashboard/locations")}>
-                        <h1 className="text-xl">Locations</h1>
+                        <h1 className="text-xl text-white">Locations</h1>
                     </button>
                 </div>
             </div>

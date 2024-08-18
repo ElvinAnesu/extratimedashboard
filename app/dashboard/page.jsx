@@ -11,25 +11,122 @@ import { useRouter } from "next/navigation"
 export default function Dashboard(){
     
     const router = useRouter()
-    const [transactions, setTransactions] = useState([])
-    const [usdAirtimeSales, setUsdairtimeSales] = useState(0)
-    const [zigAirtimeSales, setZigAirtimeSales] = useState(0)
-    const [zigZesaSales, setZigZesaSales] = useState(0)
-    const [usdZesaSales, setUsdZesaSales] = useState(0)
+    const [salestoday, setSalestoday] = useState(0)
+    const [fetchingsales, setFetchingsales] = useState(false)
+    const [cashintoday, setCashintoday] = useState(0)
+    const [fetchingcashin, setFetchingcahsin] = useState(false)
+    const [collectionstoday, setCollectionstoday] = useState(0)
+    const [fetchingcollections, setFetchingcollections] = useState(false)
+    const [outstandingcollections, setOutandingcollections] = useState(0)
+
+    //supervisortotals
+    const [outsandingdenny, setOutstandingdenny] = useState(0)
+    const [collectionstodaydenny, setCollectionstodaydenny] = useState(30)
+    const [agentperfomancedenny, setAgentperformancedenny] = useState(5)
+    const [outsandingtinashe, setOutstandingtinashe] = useState(0)
+    const [collectionstodaytinashe, setCollectionstodaytinashe] = useState(40)
+    const [agentperfomancedtinashe, setAgentperformancetinashe] = useState(30)
+    const [outsandingjames, setOutstandingjames] = useState(0)
+    const [collectionstodayjames, setCollectionstodayjames] = useState(50)
+    const [agentperfomancejames, setAgentperformancejames] = useState(10)
+    const [outsandingmalcolm, setOutstandingmalcolm] = useState(0)
+    const [collectionstodaymalcolm, setCollectionstodaymalcolm] = useState(50)
+    const [agentperfomancedmalcolm, setAgentperformancemalcolm] = useState(30)
 
 
-    const getSales = async() => {
-        const res = await fetch("/api/transactions",{
-            method: "GET",
+    const getTodaysSales = async() => {
+        setFetchingsales(true)
+        const response = await fetch("/api/reports/sales/today",{
+            method:"GET",
             headers:{"Content-type":"application/json"}
         })
+        var data = await response.json()
 
-        const data = await res.json()
         if(data.success){
-            setTransactions(data.transactions)
+            setSalestoday(data.todayssales)
+            setFetchingsales(false)
+        }else{
+            setFetchingsales(false)
         }
     }
 
+    const getMalcolmtotals = async(_id) => { 
+        const response  = await fetch("/api/airtimetransactions/totals/supervisors",{ 
+          method: "POST",
+          headers : {"Content-Type":"application/json"},
+          body:JSON.stringify({ 
+            _id: "6697bec447fe5de2d22ac181"
+          })
+        })
+    
+        const data = await response.json()
+     
+        if(data.success){
+          setOutstandingmalcolm(data.pendingtotal)
+        }
+      }
+
+    const getTinashetotals = async(_id) => { 
+        const response  = await fetch("/api/airtimetransactions/totals/supervisors",{ 
+          method: "POST",
+          headers : {"Content-Type":"application/json"},
+          body:JSON.stringify({ 
+            _id: "66979b5fe49788bca084efb9"
+          })
+        })
+    
+        const data = await response.json()
+     
+        if(data.success){
+          setOutstandingtinashe(data.pendingtotal)
+        }
+      }
+
+    const getDennytotals = async(_id) => { 
+        const response  = await fetch("/api/airtimetransactions/totals/supervisors",{ 
+          method: "POST",
+          headers : {"Content-Type":"application/json"},
+          body:JSON.stringify({ 
+            _id: "66976ec2dd72ff9a1e177549"
+          })
+        })
+    
+        const data = await response.json()
+     
+        if(data.success){
+          setOutstandingdenny(data.pendingtotal)
+        }
+      }
+    
+    const getJamestotals = async(_id) => { 
+        const response  = await fetch("/api/airtimetransactions/totals/supervisors",{ 
+          method: "POST",
+          headers : {"Content-Type":"application/json"},
+          body:JSON.stringify({ 
+            _id: "6697d1e425e820c65660a6fa"
+          })
+        })
+    
+        const data = await response.json()
+     
+        if(data.success){
+          setOutstandingjames(data.pendingtotal)
+        }
+      }  
+
+    const getOutsaningcollections = async()=>{
+        const res = await fetch("/api/airtimetransactions/totals",{
+          method:"GET",
+          headers:{"Content-type":"application/json"}
+        })
+    
+        const data = await res.json()
+    
+        if(data.success){
+          setOutandingcollections(data.pendingsales)
+        }
+      }
+    // check user authentication
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -37,69 +134,45 @@ export default function Dashboard(){
         }
     }, []);
 
+    //fetch inital values
     useEffect(()=>{
-        getSales()
+        getTodaysSales()
+        getMalcolmtotals()
+        getTinashetotals()
+        getDennytotals()
+        getJamestotals()
+        getOutsaningcollections()
     },[])
 
-    useEffect(()=>{
-        
-        const calculateBalances = () => {
-            let zesaUsd = 30
-            let zesaZig = 40
-            let airtimeUsd = 0
-            let airtimeZig = 0
-
-            transactions.forEach(transaction => {
-                if(transaction.issuccessful){
-                    console.log("we de de")
-                    console.log(transaction)
-                    if(transaction.transaction === "airtime-voucher"){
-                        if(transaction.currency === "USD"){
-                            airtimeUsd = airtimeUsd + Number(transaction.amount)
-                        }if(transaction.currency === "ZiG"){
-                            airtimeZig = airtimeZig + Number(transaction.amount)
-                        }
-                    }else if(transaction.transaction === "zesa-voucher"){
-                        if(transaction.currency === "USD"){
-                            zesaUsd = zesaUsd + Number(transaction.amount)
-                        }if(transaction.currency === "ZiG"){
-                            zesaZig = zesaZig + Number(transaction.amount)
-                        }
-                    }
-                }
-            })
-
-            setUsdZesaSales(zesaUsd)
-            setZigZesaSales(zesaZig)
-            setUsdairtimeSales(airtimeUsd)
-            setZigAirtimeSales(airtimeZig)
-        }
-        calculateBalances()
-    },[transactions])
-
+    
     return(
         <div className="flex flex-col gap-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col p-4 gap-4 md:flex-row items-center justify-end gap-4">
+            <DashboardCard 
+                    value= {`USD${outstandingcollections.toFixed(2)}`}
+                    product={"Outstanding Collections"}/>
                 <DashboardCard 
-                    value= {`USD${usdAirtimeSales.toFixed(2)}`}
-                    product={"usd airtime daily sales"}/>
-                <DashboardCard 
-                    value={`ZiG${zigAirtimeSales.toFixed(2)}`}
-                    product={"ZiG airtime daily sales"}/>
+                    value= {`USD${collectionstoday.toFixed(2)}`}
+                    product={"Today's Collections"}/>
                 <DashboardCard
-                    value={`USD${usdZesaSales.toFixed(2)}`}
-                    product={"USD ZESA daily sales"}/>
+                    value={`USD${cashintoday.toFixed(2)}`}
+                    product={"Today's Cash ins"}/>
                 <DashboardCard 
-                    value={`ZiG${zigZesaSales.toFixed(2)}`}
-                    product={"ZiG ZESA daily sales"}/>
+                    value={fetchingsales? "loading...":`USD${salestoday.toFixed(2)}`}
+                    product={"Today's Sales"}/>
             </div>
-            <div className="grid grid-cols-3 w-full h-full gap-4">
-                <ServicePerfomancePieChart _labels={["Airtme", "Zesa"]} _data={[usdAirtimeSales,usdZesaSales]}/>
-                <ServicePerfomancePieChart _labels={["Airtme", "Zesa"]} _data={[zigAirtimeSales, zigZesaSales]}/>
-                <LocationPerformance />
-                <LocationPerformance />
-                <div className="col-span-2">
-                    <BalancesChart />
+            <div className="flex flex-col md:grid md:grid-cols-3 w-full h-full gap-4 bg-gray-200 p-4 rounded">
+                <div className="flex flex-col gap-2 items-center justify-center">
+                    <h1 className="text-sm font-semibold text-gray-600">Outstanding Collections</h1>
+                    <ServicePerfomancePieChart _labels={["James","Tinashe", "Denny","Malcolm"]} _data={[outsandingjames,outsandingtinashe,outsandingdenny,outsandingmalcolm]}/>
+                </div>
+                <div className="flex flex-col gap-2 items-center justify-center">
+                    <h1 className="text-sm font-semibold text-gray-600">Today&apos;s Collections</h1>
+                    <ServicePerfomancePieChart _labels={["James","Tinashe", "Denny","Malcolm"]} _data={[collectionstodayjames, collectionstodaytinashe, collectionstodaydenny,collectionstodaymalcolm]}/>
+                </div>
+                <div className="flex flex-col gap-2 items-center justify-center">
+                <h1 className="text-sm font-semibold text-gray-600">Agent&apos;s Perfomance</h1>
+                    <ServicePerfomancePieChart _labels={["James","Tinashe", "Denny","Malcolm"]} _data={[agentperfomancejames, agentperfomancedtinashe, agentperfomancedenny,agentperfomancedmalcolm]}/>
                 </div>
             </div>
         </div>

@@ -55,9 +55,11 @@ export async function POST(req,{params}) {
         });
       }
   
+      const today = new Date()
+
       const result = await Airtimetransaction.updateMany(
         { executerid: userid },
-        { cleared: true, clearedby: user._id }
+        { cleared: true, clearedby: user._id ,clearedat:today}
       );
   
       if (!result) {

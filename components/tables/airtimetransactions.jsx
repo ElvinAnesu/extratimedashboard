@@ -105,12 +105,12 @@ export default function AirtimeTransactionTable() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col gap-4">
       <div className="flex w-full justify-end gap-8 mb-4">
         <DashboardCard value={`USD${pendingSales.toFixed(2)}`} product={"Pending Sales"} />
         <DashboardCard value={`USD${clearedSales.toFixed(2)}`} product={"Cleared Sales"} />
         <DashboardCard value={`USD${(clearedSales+pendingSales).toFixed(2)}`} product={"Total Sales"} />
-      </div>
+      </div> 
       <div className="w-full flex items-center justify-between bg-blue-900 px-4 py-1">
         <h1 className="text-sm text-white font-semibold">Transactions</h1>
         <button className="text-sm text-white flex items-center gap-2" onClick={() => getTransactions(page)}>
@@ -118,38 +118,40 @@ export default function AirtimeTransactionTable() {
           Refresh
         </button>
       </div>
-      <table>
-        <tbody>
-          <tr className="bg-blue-200 font-semibold text-sm py-1">
-            <td className="px-4">Amount</td>
-            <td className="px-4">Receiver No.</td>
-            <td className="px-4">Status</td>
-            <td className="px-4">Executed by</td>
-            <td className="px-4">Cleared </td>
-            <td className="px-4">Time</td>
-          </tr>
-          {transactions.map((transaction, i) => (
-            <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-white" key={i}>
-              <td className="px-4">{transaction.currency}{transaction.amount}</td>
-              <td className="px-4">{transaction.extras.reciever}</td>
-              <td className="px-4">{transaction.issuccessful? "completed": "failed"}</td>
-              <td className="px-4">{transaction.executedby}</td>
-              <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"}`}>
-                {transaction.cleared ? "Cleared" : "Pending"}
-              </td>
-              <td className="px-4">{formatDate(transaction.createdAt)}</td>
+      <div className="w-full p-4 rounded bg-gray-200">
+        <table className="w-full">
+          <tbody>
+            <tr className="bg-blue-200 font-semibold text-sm py-1">
+              <td className="px-4">Amount</td>
+              <td className="px-4">Receiver No.</td>
+              <td className="px-4">Status</td>
+              <td className="px-4">Executed by</td>
+              <td className="px-4">Cleared </td>
+              <td className="px-4">Time</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex justify-between items-center mt-4">
-        <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-500 text-white">
-          Previous
-        </button>
-        <span className="text-sm">Page {page}</span>
-        <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-500 text-white">
-          Next
-        </button>
+            {transactions.map((transaction, i) => (
+              <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-gray-300" key={i}>
+                <td className="px-4">{transaction.currency}{transaction.amount}</td>
+                <td className="px-4">{transaction.extras.reciever}</td>
+                <td className="px-4">{transaction.issuccessful? "completed": "failed"}</td>
+                <td className="px-4">{transaction.executedby}</td>
+                <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"}`}>
+                  {transaction.cleared ? "Cleared" : "Pending"}
+                </td>
+                <td className="px-4">{formatDate(transaction.createdAt)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex justify-between items-center mt-4">
+          <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-900 rounded text-white">
+            Previous
+          </button>
+          <span className="text-sm">Page {page}</span>
+          <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 rounded bg-blue-900 text-white">
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

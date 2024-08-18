@@ -3,7 +3,6 @@ import Header from "@/components/header"
 import AgentTransactionsTable from "@/components/tables/agenttransactionstable"
 import { useRouter } from "next/navigation"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
-import AgentsTable from "@/components/tables/agentstable"
 
 
 
@@ -17,8 +16,9 @@ export default function AgentsTransactions(){
             <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                     <div className="flex gap-4 items-center">
-                        <h1>Sort by:</h1>
-                        <select className="rounded p-2 border border-gray-400 ">
+                        <h1 className="text-sm text-gray-300">
+                            Sort by:</h1>
+                        <select className="rounded px-2 text-sm py-1 border border-gray-400 ">
                             <option>Default</option>
                             <option>Cash in hand</option>
                             <option>Total sales</option>
@@ -26,11 +26,11 @@ export default function AgentsTransactions(){
                         </select>
                     </div>
                     <div className="flex gap-2">
-                        <input className="h-9 border rounded border-gray-400  p-2 text-black"
-                            placeholder="Search"
+                        <input className=" border rounded border-gray-400  px-2 py-1 text-black text-sm"
+                            placeholder="search"
                             type="text"
                             />
-                        <button className="px-4 rounded bg-blue-600 text-white flex gap-2 flex items-center justify-center">
+                        <button className="px-2 rounded bg-blue-600 text-white flex gap-1 text-sm flex items-center justify-center">
                             <MagnifyingGlassIcon />
                             Search
                         </button>

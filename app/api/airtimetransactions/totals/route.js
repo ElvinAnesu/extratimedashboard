@@ -17,6 +17,7 @@ export async function GET(req){
         }
         let _clearedsales = 0
         let _pendingsales = 0
+        
         transactions.forEach((transaction) => {
             if (transaction.cleared && transaction.issuccessful) {
             _clearedsales += transaction.extras.amount

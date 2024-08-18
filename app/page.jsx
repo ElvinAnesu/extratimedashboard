@@ -56,14 +56,14 @@ export default function Home() {
             type="text"         
             onChange={(e) => setEmail(e.target.value)}
             required/>
-          <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+          <input className="h-9 border rounded border-gray-400 w-full p-2 text-black text-sm"
             placeholder="Password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             required/> 
-          <button className="bg-blue-900 p-2 rounded w-full text-white font-semibold"
+          <button className="bg-blue-900 p-2 rounded w-full text-white font-semibold text-sm"
             type="submit">
-            LOGIN
+           login
           </button>
         </form>
       </div>

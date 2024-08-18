@@ -87,23 +87,23 @@ export default function SupervisorsTable() {
   };
 
   return (
-    <div className="min-w-full max-h-full overflow-hidden text-sm">
+    <div className="min-w-full max-h-full overflow-hidden text-sm bg-gray-200 rounded p-4">
       <table className="w-full">
         <tbody>
-          <tr className="bg-gray-200 font-semibold">
-            <td className="border border-white px-1">#</td>
-            <td className="border border-white px-1">Agent name</td>
-            <td className="border border-white px-1">Phone Number</td>
-            <td className="border border-white px-1">Email</td>
-            <td className="border border-white px-1">Action</td>
+          <tr className="bg-blue-900 font-semibold text-white">
+            <td className="px-1">#</td>
+            <td className="px-1">Agent name</td>
+            <td className="px-1">Phone Number</td>
+            <td className="px-1">Email</td>
+            <td className="px-1">Action</td>
           </tr>
           {users.map((user, i) => (
-            <tr className="" key={i}>
-              <td className="border-b border px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
-              <td className="border-b border px-1">{`${user.firstname} ${user.surname}`}</td>
-              <td className="border-b border px-1">{user.phonenumber}</td>
-              <td className="border-b border px-1">{user.email}</td>
-              <td className="border-b border px-1">
+            <tr className="border-b border-gray-300" key={i}>
+              <td className="px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
+              <td className="px-1">{`${user.firstname} ${user.surname}`}</td>
+              <td className="px-1">{user.phonenumber}</td>
+              <td className="px-1">{user.email}</td>
+              <td className="px-1">
                 <button className="bg-blue-600 p-1 rounded flex items-center justify-center text-white"
                 onClick={() => viewSupervisor(user._id)}>
                   <EyeOpenIcon />
@@ -115,11 +115,11 @@ export default function SupervisorsTable() {
       </table>
 
       <div className="flex justify-between items-center mt-4">
-        <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-500 text-white">
+        <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-900 rounded text-white">
           Previous
         </button>
         <span className="text-sm">Page {page}</span>
-        <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-500 text-white">
+        <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-900 rounded text-white">
           Next
         </button>
       </div>

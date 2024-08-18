@@ -11,10 +11,10 @@ export default function ServicePerfomancePieChart({_labels, _data}){
         labels: _labels,
         datasets:[
             {
-                label:"Total Sales",
+                label:"Amount",
                 data:_data,
-                backgroundColor:["#040d69","#36a2eb"],
-                borderColor: ["#040d69","#36a2eb"],
+                backgroundColor:["#040d69","#36a2eb", "#3F00FF", "#1F51FF"],
+                borderColor: ["#040d69","#36a2eb","#3F00FF", "#1F51FF"],
                 borderWidth: 1
             }
         ]

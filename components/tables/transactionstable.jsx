@@ -116,7 +116,7 @@ export default function TransactionTable() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col bg-gray-200 p-4 rounded">
       <div className="flex w-full justify-end gap-8 mb-4">
         <DashboardCard value={`USD${pendingSales.toFixed(2)}`} product={"Pending Sales"} />
         <DashboardCard value={`USD${clearedSales.toFixed(2)}`} product={"Cleared Sales"} />
@@ -154,11 +154,11 @@ export default function TransactionTable() {
         </tbody>
       </table>
       <div className="flex justify-between items-center mt-4">
-        <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-500 text-white">
+        <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-900 rounded text-white">
           Previous
         </button>
         <span className="text-sm">Page {page}</span>
-        <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-500 text-white">
+        <button onClick={handleNextPage} disabled={page * PAGE_SIZE >= total} className="px-4 py-2 bg-blue-900 rounded text-white">
           Next
         </button>
       </div>
