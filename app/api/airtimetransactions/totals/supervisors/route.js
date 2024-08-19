@@ -11,20 +11,20 @@ export async function POST(req) {
     try{
         connectdb()
 
-        const today = new Date();
+        const today = new Date()
+
+        console.log(today.toDateString())
         
         const startOfDay = new Date(today.setHours(0, 0, 0, 0));
         const endOfDay = new Date(today.setHours(23, 59, 59, 999));
 
         const transactions = await Airtimetransaction.find({clearedby:_id, issuccessful: true, cleared:true})
+
         const todayscollections = await Airtimetransaction.find({   
             clearedby:_id, 
             issuccessful: true, 
             cleared:true,
-            clearedat: {
-                $gte: startOfDay,
-                $lte: endOfDay,
-              },
+            clearedat:{ $regex: today.toDateString(), $options: 'i' },
         })
 
         const supervisoragents = await User.find({supervisor: { $regex: _id, $options: 'i' }})
@@ -66,8 +66,8 @@ export async function POST(req) {
         let totalcollections = 0
         let collectionstoday = 0
 
-        todayscollections.forEach((transactioin) => { 
-            collectionstoday = collectionstoday + transactioin.extras.amount
+        todayscollections.forEach((transaction) => { 
+            collectionstoday = collectionstoday + transaction.extras.amount
         })
 
         transactions.forEach((transactioin) => { 
@@ -77,13 +77,11 @@ export async function POST(req) {
         return NextResponse.json({ 
             success:true,
             message:"Transactions fetched successfully",
-            todayscollections,
             totalcollections,
             pendingtotal,
             salestotal,
-            agentstransactions,
             collectionstoday,
-            transactions
+            todayscollections
         })
     }catch(error){
         console.log(error)

@@ -15,16 +15,20 @@ export default function TransactionTable() {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const getTransactions = async (page = 1) => {
-    const res = await fetch(`/api/transactions?page=${page}&pageSize=${PAGE_SIZE}`, {
-      method: "GET",
+  const getTransactions = async () => {
+    console.log("getting")
+    const res = await fetch("api/airtimetransactions/totals/supervisors", {
+      method: "POST",
       headers: { "Content-type": "application/json" },
+      body:JSON.stringify({
+        _id:"6697bec447fe5de2d22ac181"
+      })
     });
 
     const data = await res.json();
 
     if (data.success) {
-      setTransactions(data.transactions);
+      setTransactions(data.todayscollections);
       setTotal(data.total);
     } else {
       setErrormsg(data.message);
@@ -68,17 +72,23 @@ export default function TransactionTable() {
   };
 
   const getPendingSales = async() => {
-    const res = await fetch("/api/transactions/pending", {
-        method: "GET",
-        headers: { "Content-type": "application/json" },
-      });
-  
-      const data = await res.json();
-  
-      if (data.success) { 
-        setPendingSales(data.totalAmount)     
-        console.log(data)
-      } 
+    console.log("getting")
+    const res = await fetch("/api/airtimetransactions/totals/supervisors", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body:JSON.stringify({
+        _id:"6697bec447fe5de2d22ac181"
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setTransactions(data.todayscollections);
+      setTotal(data.total);
+    } else {
+      setErrormsg(data.message);
+    }
   }
   const getClearedSales = async() => {
     const res = await fetch("/api/transactions/cleared", {
@@ -100,8 +110,8 @@ export default function TransactionTable() {
   },[pendingSales])
 
   useEffect(() => {
-    getTransactions(page)
-  }, [page]);
+    getTransactions()
+  }, []);
 
   const handlePreviousPage = () => {
     if (page > 1) {
@@ -135,18 +145,18 @@ export default function TransactionTable() {
             <td className="px-4">Transaction</td>
             <td className="px-4">Receiver No.</td>
             <td className="px-4">Amount</td>
-            <td className="px-4">Executed by</td>
+            <td className="px-4">Cleared at</td>
             <td className="px-4">Cleared </td>
             <td className="px-4">Time</td>
           </tr>
           {transactions.map((transaction, i) => (
             <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-white" key={i}>
-              <td className="px-4">{transaction.transaction}</td>
+              <td className="px-4">{transaction.executedby}</td>
               <td className="px-4">{transaction.extras.reciever}</td>
               <td className="px-4">{transaction.amount}</td>
-              <td className="px-4">{transaction.username}</td>
+              <td className="px-4">{transaction.clearedat}</td>
               <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"}`}>
-                {transaction.cleared ? "Cleared" : "Pending"}
+                {transaction.clearedby}
               </td>
               <td className="px-4">{formatDate(transaction.createdAt)}</td>
             </tr>

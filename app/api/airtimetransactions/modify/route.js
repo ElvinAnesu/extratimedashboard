@@ -7,7 +7,7 @@ export async function PUT(req){
     try{
         connectdb()
         const transaction = await Airtimetransaction.updateMany(
-            { clearedat: { $exists: false }},
+            { clearedat: { $exists: true }},
             { clearedat: null }
         )
         if(!transaction){

@@ -58,7 +58,7 @@ export async function POST(req,{params}) {
       const today = new Date()
 
       const result = await Airtimetransaction.updateMany(
-        { executerid: userid },
+        { executerid: userid, cleared: false },
         { cleared: true, clearedby: user._id, clearedat:today}
       );
   
