@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 import Airtimetransaction from "@/app/models/airtimetransaction"
 import User from "@/app/models/user"
 
+export const dynamic = 'force-dynamic'
 
 export async function POST(req) {
     const {_id} = await req.json()
@@ -11,6 +12,7 @@ export async function POST(req) {
         connectdb()
 
         const today = new Date();
+        
         const startOfDay = new Date(today.setHours(0, 0, 0, 0));
         const endOfDay = new Date(today.setHours(23, 59, 59, 999));
 
@@ -75,6 +77,7 @@ export async function POST(req) {
         return NextResponse.json({ 
             success:true,
             message:"Transactions fetched successfully",
+            todayscollections,
             totalcollections,
             pendingtotal,
             salestotal,

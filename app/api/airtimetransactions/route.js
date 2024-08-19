@@ -44,7 +44,7 @@ export async function GET(req){
 export async function POST(req){
     const {executedby, executerid, currency, amount, extras} = await req.json()
 
-    if(executerid === "66ab3cccdab768b02f9238cf" || executerid === "669a3133d9935267edbbb851", executerid === "66ab4fab8650862667e1a8e4" || executerid === "669a2fa563ff511d2da878e2" ){
+    if(executerid === "66ab3cccdab768b02f9238cf" || executerid === "669a2fa563ff511d2da878e2" ){
     return NextResponse.json({
         success:false,
         message:"user account not active"
