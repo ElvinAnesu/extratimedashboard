@@ -53,7 +53,7 @@ export async function POST(req){
                 message:"user not found"
             })
        }
-       if(user._id === "66ab3cccdab768b02f9238cf"){
+       if(user._id === "66ab3cccdab768b02f9238cf" || user._id === "669a3133d9935267edbbb851"){
         return NextResponse.json({
             success:false,
             message:"user account not active"
