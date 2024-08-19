@@ -45,6 +45,20 @@ export async function POST(req){
     const {executedby, executerid, currency, amount, extras} = await req.json()
     try{
        connectdb()
+       const user = await User.findOne({_id:executerid})
+
+       if(!user){
+            return NextResponse.json({
+                success:false,
+                message:"user not found"
+            })
+       }
+       if(user._id === "66ab3cccdab768b02f9238cf"){
+        return NextResponse.json({
+            success:false,
+            message:"user account not active"
+        })
+       }
        const transaction = await Airtimetransaction.create({
         executedby,
         executerid,
@@ -88,7 +102,6 @@ export async function PUT(req){
             message:"transaction status changed successfully",
             transaction
         })
-
     }catch(error){
         return NextResponse.json({ 
             success:false,
