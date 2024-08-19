@@ -64,7 +64,7 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingmalcolm(data.pendingtotal)
-          setCollectionstodaymalcolm(data.collectionstoday)
+          //setCollectionstodaymalcolm(data.collectionstoday)
           setAgentperformancemalcolm(data.salestotal)
         }
       }
@@ -82,7 +82,7 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingtinashe(data.pendingtotal)
-          setCollectionstodaytinashe(data.collectionstoday)
+          //setCollectionstodaytinashe(data.collectionstoday)
           setAgentperformancetinashe(data.salestotal)
         }
       }
@@ -100,7 +100,7 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingdenny(data.pendingtotal)
-          setCollectionstodaydenny(data.collectionstoday)
+          //setCollectionstodaydenny(data.collectionstoday)
           setAgentperformancedenny(data.salestotal)
         }
       }
@@ -118,7 +118,7 @@ export default function Dashboard(){
      
         if(data.success){
           setOutstandingjames(data.pendingtotal)
-          setCollectionstodayjames(data.collectionstoday)
+          //setCollectionstodayjames(data.collectionstoday)
           setAgentperformancejames(data.salestotal)
         }
       }  
