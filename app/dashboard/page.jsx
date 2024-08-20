@@ -161,7 +161,7 @@ export default function Dashboard(){
                     value= {`USD${outstandingcollections.toFixed(2)}`}
                     product={"Outstanding Collections"}/>
                 <DashboardCard 
-                    value= {`USD${collectionstoday.toFixed(2)}`}
+                    value= {`USD${(collectionstodaymalcolm + collectionstodaydenny + collectionstodayjames + collectionstodaytinashe).toFixed(2)}`}
                     product={"Today's Collections"}/>
                 <DashboardCard
                     value={`USD${cashintoday.toFixed(2)}`}
