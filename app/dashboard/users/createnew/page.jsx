@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-
 export default function CreateAdmin(){ 
 
     const router = useRouter()
@@ -18,10 +17,14 @@ export default function CreateAdmin(){
     const [supervisor, setSupervisor] = useState()
     const [password, setPassword] = useState()
     const [locations,setLocations] = useState([])
+    const [machinenumber, setmachinenumber] = useState()
+    const [nextofkeenphonenumber,setnextofkeenphonenumber]=useState()
+    const [nextofkeen, setnextofkeen] = useState()
     const [supervisors, setSupervisors] = useState([])
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const [dialogTitle, setDialogTitle] = useState()
     const [dialogMsg, setDialogMsg] = useState()
+    const [address, setaddress] = useState()
 
     const getLocations = async() => {
             const res = await fetch("/api/locations",{
@@ -65,7 +68,11 @@ export default function CreateAdmin(){
                 location,
                 supervisor,
                 password,
-                locations
+                locations,
+                address,
+                machinenumber,
+                nextofkeen,
+                nextofkeenphonenumber,
             })
         })
 
@@ -82,6 +89,20 @@ export default function CreateAdmin(){
         }
    }
 
+   //to be removed 
+   const showdCapturedDetails = () => {
+    console.log("surname:" ,surname)
+    console.log("firstname:",firstname)
+    console.log("email:",email)
+    console.log("phonenumber:",phonenumber)
+    console.log("role:", role)
+    console.log("location:",location)
+    console.log("machinenumber:", machinenumber);
+    console.log("nextofkeenphonenumber:", nextofkeenphonenumber);
+    console.log("nextofkeen:", nextofkeen);
+    console.log('address:', address);
+   
+   }
    useEffect(()=>{
         getLocations()
         getSupervisors()
@@ -94,7 +115,7 @@ export default function CreateAdmin(){
                 <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                     placeholder="Surname"
                     type="text"
-                    onChange={(e) => setSurname(e.target.value)}v/>
+                    onChange={(e) => setSurname(e.target.value)}/>
                 <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                     placeholder="First Name"
                     type="text"
@@ -107,6 +128,22 @@ export default function CreateAdmin(){
                     placeholder="Phone Number"
                     type="text"
                     onChange={(e) => setPhonenumber(e.target.value)}/>
+                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                    placeholder=" machinenumber"
+                    type="text"
+                    onChange={(e) => setmachinenumber(e.target.value)}/>
+                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                    placeholder="address"
+                    type="text"
+                    onChange={(e) => setaddress(e.target.value)}/>
+                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                    placeholder="nextofkeenphonenumber"
+                    type="text"
+                    onChange={(e) => setnextofkeenphonenumber(e.target.value)}/>
+                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                    placeholder="nextofkeen"
+                    type="text"
+                    onChange={(e) => setnextofkeen(e.target.value)}/>
                 <select className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}>
@@ -155,7 +192,7 @@ export default function CreateAdmin(){
                     CREATE USER
                 </button>
             </form>
-
+            
             {showAlertDialog && <AlertDialog
                                 title={dialogTitle} 
                                 message={dialogMsg} 

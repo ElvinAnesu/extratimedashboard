@@ -38,6 +38,22 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    address:{
+         type:String,
+         required:null
+    },
+    nextofkeen:{
+        type:String,
+        required:null
+    },
+    machinenumber:{
+        type:String,
+        required:null
+    },
+    nextofkeenphonenumber:{
+        type:String,
+        required:null
+    },
     assignedVouchers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Voucher'
