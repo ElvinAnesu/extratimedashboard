@@ -40,19 +40,19 @@ const userSchema = new Schema({
     },
     address:{
          type:String,
-         required:null
+         default:null
     },
-    nextofkeen:{
+    nextofkin:{
         type:String,
-        required:null
+        default:null
     },
     machinenumber:{
         type:String,
-        required:null
+        default:null
     },
-    nextofkeenphonenumber:{
+    nextofkinphonenumber:{
         type:String,
-        required:null
+        default:null
     },
     assignedVouchers: [{
         type: mongoose.Schema.Types.ObjectId,

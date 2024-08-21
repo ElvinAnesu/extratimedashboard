@@ -7,8 +7,8 @@ export async function PUT(request) {
     try{
         connectdb()
         const updateusers = await User.updateMany(
-            { active: { $exists: false }},
-            { active: true }
+            { address: {$exists: false}},
+            { address: null }
         )
         if(!updateusers){
             return NextResponse.json({

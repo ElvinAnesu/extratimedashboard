@@ -32,7 +32,8 @@ const airtimevoucherSchema = new Schema({
     allocated:{
         type: Boolean,
         default:false
-    }
+    },
+    
 },{
     timestamps: true 
 })

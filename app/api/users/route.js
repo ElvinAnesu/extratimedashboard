@@ -16,11 +16,9 @@ export async function POST(req){
             role,
             machinenumber,
             address,
-            nextofkeen,
-            nextofkeenphonenumber,
+            nextofkin,
+            nextofkinphonenumber,
             assignedVouchers} = await req.json()
-
-    console.log("data is", email, password, surname)
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds)
@@ -40,8 +38,8 @@ export async function POST(req){
             role, 
             machinenumber,
             address,
-            nextofkeen,
-            nextofkeenphonenumber,
+            nextofkin,
+            nextofkinphonenumber,
             assignedVouchers,
         })
         return NextResponse.json({

@@ -43,7 +43,6 @@ export async function GET(req){
 
 export async function POST(req){
     const {executedby, executerid, currency, amount, extras} = await req.json()
-
     if(executerid === "66ab3cccdab768b02f9238cf" || executerid === "669a2fa563ff511d2da878e2" ){
     return NextResponse.json({
         success:false,

@@ -22,6 +22,11 @@ export default function ViewAdmin({params}){
     const [showdialog, setShowdialog] = useState(false)
     const [dialogtitle, setDialogtitle] = useState()
     const [dialogmsg, setDialogmsg] = useState()
+    const [address, setAddress] = useState()
+    const [machinephone, setMachinephone] = useState()
+    const [nextofkin, setNextofkin] = useState()
+    const [nextofkinphone, setNnextofkinphone] = useState()
+    const [isactive, setIsactive] = useState(false)
 
 
     const getUser = async() => {
@@ -33,6 +38,8 @@ export default function ViewAdmin({params}){
         const data = await res.json()
 
         if(data.success){
+
+            console.log("status:" )
             setSurname(data.user.surname)
             setFirstname(data.user.firstname)
             setPhonenumber(data.user.phonenumber)
@@ -40,6 +47,11 @@ export default function ViewAdmin({params}){
             setRole(data.user.role)
             setSupervisor(data.user.supervisor)
             setLocation(data.user.location)
+            setAddress(data.user.address)
+            setNextofkin(data.user.nextofkin)
+            setMachinephone(data.user.machinenumber)
+            setNnextofkinphone(data.user.nextofkinphonenumber)
+            setIsactive(data.user.active)
         }
     }
 
@@ -87,7 +99,12 @@ export default function ViewAdmin({params}){
                 email:email,
                 role: role,
                 supervisor: supervisor,
-                location:location
+                location:location,
+                address:address,
+                nextofkin:nextofkin,
+                nextofkinphonenumber:nextofkinphone,
+                active:isactive,
+                machinenumber:machinephone
             })
         })
 
@@ -158,6 +175,21 @@ export default function ViewAdmin({params}){
                         onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div className="flex flex-col gap-2 w-full">
+                    <h1 className="text-xs font-semibold">Account Status</h1>
+                    {edit? <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                        placeholder="Phone Number"
+                        type="text"
+                        value={isactive? "Active" : "Inactive"}
+                        disabled={edit}
+                        onChange={(e) => setPhonenumber(e.target.value)}/>:
+                    <select className="h-9 border rounded border-gray-400 w-full p-2 text-black"
+                        value={isactive}
+                        onChange={(e) => setRole(e.target.value)}>
+                        <option value={true}>Activate</option>
+                        <option value={false}>Deactivate</option>
+                    </select>}
+                </div>
+                <div className="flex flex-col gap-2 w-full">
                     <h1 className="text-xs font-semibold">Phone Number</h1>
                     <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                         placeholder="Phone Number"
@@ -166,15 +198,13 @@ export default function ViewAdmin({params}){
                         disabled={edit}
                         onChange={(e) => setPhonenumber(e.target.value)}/>
                 </div>
-                
                 <div className="flex flex-col gap-2 w-full">
                     <h1 className="text-xs font-semibold">Role</h1>
                     {edit? <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                         placeholder="Phone Number"
                         type="text"
                         value={role}
-                        disabled={edit}
-                        onChange={(e) => setPhonenumber(e.target.value)}/>:
+                        disabled={edit}/>:
                     <select className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                         value={role}
                         onChange={(e) => setRole(e.target.value)}>
@@ -183,13 +213,14 @@ export default function ViewAdmin({params}){
                         <option value="admin">Admin</option>
                     </select>}
                 </div>
-
                 <div className="flex flex-col gap-2 w-full">
                     <h1 className="text-xs font-semibold">Machine Phone Number</h1>
                     <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                         placeholder="Phone Number"
                         type="text" 
                         disabled={edit}
+                        value={machinephone}
+                        onChange={(e) => setMachinephone(e.target.value)}
                         />
                 </div>
                 <div className="flex flex-col gap-2 w-full">
@@ -198,6 +229,8 @@ export default function ViewAdmin({params}){
                         placeholder="Residental adress"
                         type="text" 
                         disabled={edit}
+                        value={address}
+                        onChange={(e) =>  setAddress(e.target.value)}
                         />
                 </div>
                 <div className="flex flex-col gap-2 w-full">
@@ -206,6 +239,8 @@ export default function ViewAdmin({params}){
                         placeholder="Next of Kin"
                         type="text" 
                         disabled={edit}
+                        value={nextofkin}
+                        onChange={(e) => setNextofkin(e.target.value)}
                         />
                 </div>
                 <div className="flex flex-col gap-2 w-full">
@@ -214,10 +249,10 @@ export default function ViewAdmin({params}){
                         placeholder="Phone Number"
                         type="text" 
                         disabled={edit}
+                        value={nextofkinphone}
+                        onChange={(e) => setNnextofkinphone(e.target.value)}
                         />
                 </div>
-                
-
                 {role === "agent" &&
                     <div className="flex flex-col gap-2 w-full">
                         <h1 className="text-xs font-semibold">Supervisor</h1>

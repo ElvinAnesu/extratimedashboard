@@ -68,7 +68,21 @@ export async function GET(req,{params}){
 //update user
 export async function PUT(req,{params}){
   const {_id} = params
-  const { email, surname, firstname, phonenumber, location, supervisor, role} = await req.json()
+  const { 
+    email, 
+    surname, 
+    firstname, 
+    phonenumber, 
+    location, 
+    supervisor, 
+    role,
+    machinenumber,
+    address,
+    nextofkin,
+    nextofkinphonenumber,
+    assignedVouchers,
+    active
+  } = await req.json()
   try{
     connectdb()
     const user = await User.findOneAndUpdate({_id},{
@@ -78,7 +92,13 @@ export async function PUT(req,{params}){
         phonenumber,
         location,
         supervisor,
-        role
+        role,
+        machinenumber,
+        address,
+        nextofkin,
+        nextofkinphonenumber,
+        assignedVouchers,
+        active
     })
     if(!user){
       return NextResponse.json({
