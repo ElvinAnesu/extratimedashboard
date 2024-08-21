@@ -44,7 +44,10 @@ export async function GET(req){
 export async function POST(req){
     const {executedby, executerid, currency, amount, extras} = await req.json()
 
-    const user = await User.findById(executerid)
+    try{
+       connectdb()
+
+       const user = await User.findById(executerid)
 
     console.log(user)
     if(!user){
@@ -61,9 +64,7 @@ export async function POST(req){
             message:"user account not found"
         })
     }
-
-    try{
-       connectdb()
+    
        const transaction = await Airtimetransaction.create({
         executedby,
         executerid,
