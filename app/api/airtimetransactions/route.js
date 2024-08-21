@@ -49,22 +49,17 @@ export async function POST(req){
 
        const user = await User.findById(executerid)
 
-    console.log(user)
-    if(!user){
+    if(!user.active){
+        console.log("user account not acctive")
+        var status = user.active
         return NextResponse.json({
             success:false,
-            message:"user not found"
+            message:"user account not found",
+            status,
+            user
         })
     }
 
-    if(!user.active){
-        console.log("user account not acctive")
-        return NextResponse.json({
-            success:false,
-            message:"user account not found"
-        })
-    }
-    
        const transaction = await Airtimetransaction.create({
         executedby,
         executerid,
