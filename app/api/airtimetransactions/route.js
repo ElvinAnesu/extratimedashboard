@@ -46,15 +46,13 @@ export async function POST(req){
 
     try{
        connectdb()
-
        const user = await User.findById(executerid)
-
     if(!user.active){
         console.log("user account not acctive")
         var status = user.active
         return NextResponse.json({
             success:false,
-            message:"user account not found",
+            message:"user account not active",
             status,
             user
         })
