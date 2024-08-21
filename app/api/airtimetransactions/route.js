@@ -62,13 +62,6 @@ export async function POST(req){
         })
     }
 
-    if(executerid === "66ab3cccdab768b02f9238cf" || executerid === "669a2fa563ff511d2da878e2" ){
-    return NextResponse.json({
-        success:false,
-        message:"user account not active"
-    })
-    }
-
     try{
        connectdb()
        const transaction = await Airtimetransaction.create({
