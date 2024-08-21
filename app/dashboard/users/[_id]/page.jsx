@@ -184,7 +184,7 @@ export default function ViewAdmin({params}){
                         onChange={(e) => setPhonenumber(e.target.value)}/>:
                     <select className="h-9 border rounded border-gray-400 w-full p-2 text-black"
                         value={isactive}
-                        onChange={(e) => setRole(e.target.value)}>
+                        onChange={(e) => setIsactive(e.target.value)}>
                         <option value={true}>Activate</option>
                         <option value={false}>Deactivate</option>
                     </select>}

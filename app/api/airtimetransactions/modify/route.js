@@ -7,8 +7,8 @@ export async function PUT(req){
     try{
         connectdb()
         const transaction = await Airtimetransaction.updateMany(
-            { clearedat: { $exists: true }},
-            { clearedat: null }
+            { clearedby: "6697bec447fe5de2d22ac181"},
+            { cashedin: true }
         )
         if(!transaction){
             return NextResponse.json({
