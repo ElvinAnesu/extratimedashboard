@@ -55,16 +55,22 @@ export async function POST(req){
 
 // Get all users with pagination
 export async function GET(req) {
-    const { searchParams } = new URL(req.url);
-    const page = parseInt(searchParams.get("page")) || 1;
-    const pageSize = parseInt(searchParams.get("pageSize")) || 10;
+
+    const { searchParams } = new URL(req.url)
+    const page = parseInt(searchParams.get("page")) || 1
+    const pageSize = parseInt(searchParams.get("pageSize")) || 10
+    const searchQuery = searchParams.get("searchQuery")
+
+    const query = searchQuery
+      ? { firstname: { $regex: new RegExp(searchQuery, 'i') } }
+      : {}
   
     try {
       await connectdb();
-      const totalUsers = await User.countDocuments();
-      const users = await User.find()
+      const totalUsers = await User.countDocuments(query)
+      const users = await User.find(query)
         .skip((page - 1) * pageSize)
-        .limit(pageSize);
+        .limit(pageSize)
   
       if (!users) {
         return NextResponse.json({

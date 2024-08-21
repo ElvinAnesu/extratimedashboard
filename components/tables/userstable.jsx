@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ConfirmDelete from "../dialogs/confirmdelete";
 import AlertDialog from "../dialogs/alertdialog";
+import { MagnifyingGlassIcon, PlusIcon} from "@radix-ui/react-icons"
 
 const PAGE_SIZE = 10;
 
@@ -20,6 +21,8 @@ export default function UsersTable() {
   const [deletedialogmsg, setDeletedialogmsg] = useState();
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [searchQuery, setSearchquery] = useState()
+
 
   const viewUser = (_id) => {
     router.push(`/dashboard/users/${_id}`);
@@ -50,7 +53,7 @@ export default function UsersTable() {
   };
 
   const getUsers = async (page = 1) => {
-    const res = await fetch(`/api/users?page=${page}&pageSize=${PAGE_SIZE}`, {
+    const res = await fetch(`/api/users?page=${page}&pageSize=${PAGE_SIZE}&searchQuery=${searchQuery}`, {
       method: "GET",
       headers: { "Content-type": "application/json" },
     });
@@ -87,7 +90,25 @@ export default function UsersTable() {
   };
 
   return (
-    <div className="min-w-full max-h-full overflow-hidden text-sm bg-gray-200 rounded p-4">
+    <div className="min-w-full max-h-full flex flex-col gap-2 overflow-hidden text-sm bg-gray-200 rounded p-4">
+      <div className="flex items-center justify-between">
+        <div className=" mb-2 flex gap-2  flex items-center justify-betweeen">
+            <input className="border rounded border-gray-400  py-1 px-2 text-sm text-black"
+                placeholder="search by firstname"
+                type="text"
+                onChange={(e) => setSearchquery(e.target.value)}
+                />   
+            <button className="px-2 rounded bg-blue-600 text-white flex gap-1  py-1 px-2 text-sm flex items-center justify-center"
+                onClick={getUsers}>
+                <MagnifyingGlassIcon />
+                Search
+            </button>
+        </div>
+        <button className="flex items-center justify-center gap-2 bg-blue-900 rounded px-2 py-1 text-white"
+            onClick={()=>router.push("/dashboard/users/createnew")}>
+            <PlusIcon />Add New
+        </button>
+      </div>
       <table className="w-full">
         <tbody>
           <tr className="bg-blue-900 text-white font-semibold">
