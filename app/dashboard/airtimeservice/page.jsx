@@ -10,7 +10,7 @@ export default function AirtimeService(){
     
 
     return(
-        <div className="w-full h-full flex flex-col gap-4">
+        <div className="w-full h-full flex flex-col gap-4 p-2">
             <Header title="Econet Airtime" />
             <div className="flex items-center justify-end">
                 <button className={`${showTab=="new"? "bg-blue-900" :"bg-gray-400"} px-4 text-xs font-semibold text-white`}
