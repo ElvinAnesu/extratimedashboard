@@ -7,15 +7,17 @@ import DashboardCard from "../cards/dashboardcards";
 const PAGE_SIZE = 10;
 
 export default function AirtimeTransactionTable() {
-  const [transactions, setTransactions] = useState([]);
-  const [totalSales, setTotalSales] = useState(0);
-  const [pendingSales, setPendingSales] = useState(0);
-  const [clearedSales, setClearedSales] = useState(0);
-  const [errorMsg, setErrormsg] = useState();
-  const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
+  const [transactions, setTransactions] = useState([])
+  const [totalSales, setTotalSales] = useState(0)
+  const [pendingSales, setPendingSales] = useState(0)
+  const [clearedSales, setClearedSales] = useState(0)
+  const [errorMsg, setErrormsg] = useState()
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+  const [isloading, setIsloading] = useState(false)
 
   const getTransactions = async (page = 1) => {
+    setIsloading(true)
     const res = await fetch(`/api/airtimetransactions?page=${page}&pageSize=${PAGE_SIZE}`, {
       method: "GET",
       headers: { "Content-type": "application/json" },
@@ -24,17 +26,19 @@ export default function AirtimeTransactionTable() {
     const data = await res.json();
 
     if (data.success) {
-      setTransactions(data.transactions);
-      setTotal(data.total);
+      setTransactions(data.transactions)
+      setTotal(data.total)
+      setIsloading(false)
     } else {
-      setErrormsg(data.message);
+      setErrormsg(data.message)
+      setIsloading(false)
     }
   };
 
  
   const formatDate = (createdAt) => {
-    const dateObj = new Date(createdAt);
-    const now = new Date();
+    const dateObj = new Date(createdAt)
+    const now = new Date()
 
     // Check if createdAt is today
     if (
@@ -119,30 +123,33 @@ export default function AirtimeTransactionTable() {
         </button>
       </div>
       <div className="w-full p-4 rounded bg-gray-200">
+        {isloading? <div className="flex w-full h-full items-center justify-center p-8">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+          </div>:
         <table className="w-full">
-          <tbody>
-            <tr className="bg-blue-200 font-semibold text-sm py-1">
-              <td className="px-4">Amount</td>
-              <td className="px-4 hidden md:block">Receiver No.</td>
-              <td className="px-4 hidden md:block">Status</td>
-              <td className="px-4">Executed by</td>
-              <td className="px-4 hidden md:block">Cleared </td>
-              <td className="px-4">Time</td>
+        <tbody>
+          <tr className="bg-blue-200 font-semibold text-sm py-1">
+            <td className="px-4">Amount</td>
+            <td className="px-4 hidden md:block">Receiver No.</td>
+            <td className="px-4 hidden md:block">Status</td>
+            <td className="px-4">Executed by</td>
+            <td className="px-4 hidden md:block">Cleared </td>
+            <td className="px-4">Time</td>
+          </tr>
+          {transactions.map((transaction, i) => (
+            <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-gray-300" key={i}>
+              <td className="px-4">{transaction.currency}{transaction.amount}</td>
+              <td className="px-4 hidden md:block">{transaction.extras.reciever}</td>
+              <td className="px-4 hidden md:block">{transaction.issuccessful? "completed": "failed"}</td>
+              <td className="px-4">{transaction.executedby}</td>
+              <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"} hidden md:block`}>
+                {transaction.cleared ? "Cleared" : "Pending"}
+              </td>
+              <td className="px-4 ">{formatDate(transaction.createdAt)}</td>
             </tr>
-            {transactions.map((transaction, i) => (
-              <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-gray-300" key={i}>
-                <td className="px-4">{transaction.currency}{transaction.amount}</td>
-                <td className="px-4 hidden md:block">{transaction.extras.reciever}</td>
-                <td className="px-4 hidden md:block">{transaction.issuccessful? "completed": "failed"}</td>
-                <td className="px-4">{transaction.executedby}</td>
-                <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"} hidden md:block`}>
-                  {transaction.cleared ? "Cleared" : "Pending"}
-                </td>
-                <td className="px-4 ">{formatDate(transaction.createdAt)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>}
         <div className="flex justify-between items-center mt-4">
           <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-900 rounded text-white">
             Previous
