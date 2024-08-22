@@ -89,8 +89,8 @@ export default function AgentTransactionsTable() {
               <tr className="bg-blue-900 font-semibold text-white ">
                 <td className="px-1">#</td>
                 <td className="px-1">Agent name</td>
-                <td className="px-1 hidden md:block">Phone Number</td>
-                <td className="px-1 hidden md:block">Location</td>
+                <td className="px-1 hidden md:table-cell">Phone Number</td>
+                <td className="px-1 hidden md:table-cell">Location</td>
                 <td className="px-1">Supervisor</td>
                 <td className="px-1">Pending Sales</td>
                 <td className="px-1">Total Sales</td>
@@ -99,8 +99,8 @@ export default function AgentTransactionsTable() {
                 <tr className="border-b border-gray-300" key={i}>
                   <td className="px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
                   <td className="px-1">{`${user.firstname} ${user.surname}`}</td>
-                  <td className="px-1 hidden md:block">{user.phonenumber}</td>
-                  <td className="px-1 hidden md:block">{user.location}</td>
+                  <td className="px-1 hidden md:table-cell">{user.phonenumber}</td>
+                  <td className="px-1 hidden md:table-cell">{user.location}</td>
                   <td className="px-1">{user.supervisor? user.supervisor.split('-')[0] : ""}</td>
                   <td className="px-1">
                     {salesData[user._id] ? salesData[user._id].pending.toFixed(2) : "Loading..."}

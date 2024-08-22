@@ -124,7 +124,6 @@ export default function UsersTable() {
             <td className="px-1">Surname</td>
             <td className="px-1">First Name</td>
             <td className="px-1">Role</td>
-            <td className="px-1 hidden md:block">Email</td>
             <td className="px-1 hidden md:block">Phone Number</td>
             <td className="px-1">Action</td>
           </tr>
@@ -134,7 +133,6 @@ export default function UsersTable() {
               <td className="px-1">{user.surname}</td>
               <td className="px-1">{user.firstname}</td>
               <td className="px-1">{user.role}</td>
-              <td className="px-1 hidden md:block">{user.email}</td>
               <td className="px-1 hidden md:block">{user.phonenumber}</td>
               <td className="px-1">
                 <div className="flex gap-2 items-center">
