@@ -61,13 +61,18 @@ export async function GET(req) {
     const pageSize = parseInt(searchParams.get("pageSize")) || 10
     const searchQuery = searchParams.get("searchQuery")
 
-    const query = searchQuery
-      ? { firstname: { $regex: new RegExp(searchQuery, 'i') } }
+    console.log(searchQuery)
+
+    const query = searchQuery != "null"
+      ? { surname: { $regex: new RegExp(searchQuery, 'i') } }
       : {}
   
+    
+    console.log(query)
     try {
       await connectdb();
       const totalUsers = await User.countDocuments(query)
+      console.log(totalUsers)
       const users = await User.find(query)
         .skip((page - 1) * pageSize)
         .limit(pageSize)

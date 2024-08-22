@@ -21,7 +21,8 @@ export default function UsersTable() {
   const [deletedialogmsg, setDeletedialogmsg] = useState();
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [searchQuery, setSearchquery] = useState()
+  const [searchQuery, setSearchquery] = useState(null)
+  const [isloading, setIsloading] = useState(false)
 
 
   const viewUser = (_id) => {
@@ -53,18 +54,21 @@ export default function UsersTable() {
   };
 
   const getUsers = async (page = 1) => {
+    setIsloading(true)
     const res = await fetch(`/api/users?page=${page}&pageSize=${PAGE_SIZE}&searchQuery=${searchQuery}`, {
       method: "GET",
       headers: { "Content-type": "application/json" },
     });
 
-    const data = await res.json();
+    const data = await res.json()
 
     if (data.success) {
-      setUsers(data.users);
-      setTotal(data.total);
+      setUsers(data.users)
+      setTotal(data.total)
+      setIsloading(false)
     } else {
-      setError("Error fetching users");
+      setError("Error fetching users")
+      setIsloading(false)
     }
   };
 
@@ -109,7 +113,11 @@ export default function UsersTable() {
             <PlusIcon />Add New
         </button>
       </div>
-      <table className="w-full">
+      {
+        isloading? <div className="flex w-full h-full items-center justify-center p-8">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+          </div>:
+        <table className="w-full">
         <tbody>
           <tr className="bg-blue-900 text-white font-semibold">
             <td className="px-1">#</td>
@@ -148,6 +156,8 @@ export default function UsersTable() {
           ))}
         </tbody>
       </table>
+      
+      }
 
       <div className="flex justify-between items-center mt-4">
         <button
