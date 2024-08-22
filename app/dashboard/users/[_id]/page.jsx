@@ -134,7 +134,7 @@ export default function ViewAdmin({params}){
      
 
     return(
-        <div className="w-full h-full flex flex-col gap-4">
+        <div className="w-full h-full flex flex-col gap-4 p-2">
             <Header title="User Profile" />
             <div className="flex items-center gap-4 justify-end">
                 <button className="flex items-center justify-center gap-2 bg-blue-900 rounded p-2 text-white"

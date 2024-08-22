@@ -109,7 +109,7 @@ export default function CreateAdmin(){
    },[])
 
     return(
-        <div className="w-full h-full flex flex-col gap-4">
+        <div className="w-full h-full flex flex-col gap-4 p-2">
             <Header title="Create New User" />
             <form className="grid grid-cols-2 gap-4" onSubmit={(e)=>{e.preventDefault(); createUser()}}>
                 <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"

@@ -8,7 +8,7 @@ export default function Options(){
     const router = useRouter()
 
     return(
-        <div className="w-full h-full flex flex-col gap-8">
+        <div className="w-full h-full flex flex-col gap-8 p-2">
             <Header title="Options" />
 
             <div className="flex flex-col gap-4">
