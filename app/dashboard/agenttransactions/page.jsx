@@ -14,7 +14,7 @@ export default function AgentsTransactions(){
         <div className="w-full h-full flex flex-col gap-4 p-2">
             <Header title="Agents" />
             <div className="flex flex-col gap-4">
-                <div className="flex flex-col flex-row gap-2 items-center justify-between">
+                <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
                     <div className="flex gap-4 items-center">
                         <h1 className="text-sm text-gray-300">
                             Sort by:</h1>

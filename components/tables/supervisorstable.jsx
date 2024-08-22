@@ -94,7 +94,7 @@ export default function SupervisorsTable() {
             <td className="px-1">#</td>
             <td className="px-1">Agent name</td>
             <td className="px-1">Phone Number</td>
-            <td className="px-1">Email</td>
+            <td className="px-1 hidden md:block">Email</td>
             <td className="px-1">Action</td>
           </tr>
           {users.map((user, i) => (
@@ -102,7 +102,7 @@ export default function SupervisorsTable() {
               <td className="px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
               <td className="px-1">{`${user.firstname} ${user.surname}`}</td>
               <td className="px-1">{user.phonenumber}</td>
-              <td className="px-1">{user.email}</td>
+              <td className="px-1 hidden md:block">{user.email}</td>
               <td className="px-1">
                 <button className="bg-blue-600 p-1 rounded flex items-center justify-center text-white"
                 onClick={() => viewSupervisor(user._id)}>

@@ -6,7 +6,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 export default function Supervisors(){
     return(
         
-        <div className="w-full h-full flex flex-col gap-4">
+        <div className="w-full h-full flex flex-col gap-4 p-2">
             <Header title="Supervisors" />
             <div className=" flex-col gap-4">
             <div className=" mb-4 flex gap-2  gap-2 flex items-center justify-end">
