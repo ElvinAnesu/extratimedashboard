@@ -1,9 +1,9 @@
 "use client"
 import Header from "@/components/header"
 import { useEffect, useState } from "react"
-import { Pencil2Icon, LockClosedIcon } from "@radix-ui/react-icons"
+import { Pencil2Icon, LockClosedIcon, Cross1Icon } from "@radix-ui/react-icons"
 import AlertDialog from "@/components/dialogs/alertdialog"
-import ResetPinDialog from "@/components/dialogs/resetpindialog"
+
 
 
 export default function ViewAdmin({params}){ 
@@ -27,6 +27,12 @@ export default function ViewAdmin({params}){
     const [nextofkin, setNextofkin] = useState()
     const [nextofkinphone, setNnextofkinphone] = useState()
     const [isactive, setIsactive] = useState(false)
+    const [showresetpin, setShowResetpinDialog] = useState(false)
+    const [newpin, setNewpin] = useState()
+    const [isloading, setIsloading] = useState(false)
+    const [showconfirm, setShowConfirm] = useState(false)
+    const [confirmtitle, setConfirmtitle] = useState()
+    const [confirmmsg, setConfirmsg] = useState()
 
 
     const getUser = async() => {
@@ -126,6 +132,33 @@ export default function ViewAdmin({params}){
         window.location.reload()
     }
 
+    const changePin = async() => {
+        setShowResetpinDialog(false)
+        setIsloading(true)
+        const response = await fetch("/api/auth/changepin",{
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                phonenumber: phonenumber,
+                newpin: newpin
+            })
+        })
+
+        const data = await response.json()
+
+        if(data.success){
+            setConfirmtitle("Done")
+            setConfirmsg(data.message)
+            setIsloading(false)
+            setShowConfirm(true)
+        }else{
+            setConfirmtitle("Failed")
+            setConfirmsg(data.message)
+            setIsloading(false)
+            setShowConfirm(true)
+        }
+    }
+
     useEffect(()=>{
         getUser()
         getLocations()
@@ -142,7 +175,7 @@ export default function ViewAdmin({params}){
                     <Pencil2Icon />Edit
                 </button>
                 <button className="flex items-center justify-center gap-2 bg-blue-900 rounded p-2 text-white"
-                    onClick={()=> router.push("/dashboard/users/resetpin")}>
+                    onClick={()=> setShowResetpinDialog(true)}>
                     <LockClosedIcon />Reset Pin
                 </button>
             </div>
@@ -298,7 +331,33 @@ export default function ViewAdmin({params}){
             </div>
 
             {showdialog && <AlertDialog title={dialogtitle} message={dialogmsg} onOk={onOk}/>}
-            {/* <ResetPinDialog /> */}
+
+            {   //change pin API response
+                showconfirm && <AlertDialog title={confirmtitle} message={confirmmsg} onOk={()=>setShowConfirm(false)}/>
+            }
+            {//change pin dialog
+            showresetpin && <div className="absolute top-0 left-0 w-full h-full bg-black opacity-95 flex items-center justify-center">
+                <div className="bg-white rounded opacity-100 flex flex-col items-center justify-center p-8 gap-8">
+                    <div className="w-full flex items-center justify-end"> 
+                        <button className="text-black"
+                            onClick={()=> setShowResetpinDialog(false)}>
+                            <Cross1Icon />
+                        </button>
+                    </div>
+                    <h1 className="font-bold text-black">Reset Pin</h1>
+                    <div className="w-full flex flex-col gap-2">
+                        <input className="rounded border-2 border-gray-500 p-2"
+                            placeholder="New pin"
+                            onChange={(e)=> setNewpin(e.target.value)}/>
+                    </div>
+                    <div className="w-full flex items-center justify-end">
+                        <button className="rounded px-2 py-1 bg-red-600 opacity-100 text-white"
+                            onClick={changePin}>
+                            Reset Pin
+                        </button>
+                    </div>
+                </div>
+            </div>}
         </div>
     )
 }
