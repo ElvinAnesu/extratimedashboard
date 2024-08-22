@@ -53,15 +53,15 @@ export default function CollectionsReport(){
     
     return ( 
     <div className="w-full flex flex-col bg-gray-200 rounded p-4">
-        <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-2">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 mb-8">
+            <div className="flex flex-col md:flex-row items-center gap-2">
                 <h1 className="text-sm text-gray-500">Report:</h1>
                 <select className="border border-gray-300 rounded px-2 py-1 text-sm">
                     <option>collections</option>     
                 </select>
             </div>
             <div className="flex gap-8">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col md:flex-row items-center gap-2">
                     <h1 className="text-sm text-gray-500">Start Date:</h1>
                     <input
                         type="date"
@@ -71,7 +71,7 @@ export default function CollectionsReport(){
                         onChange={(e)=> setStartdate(e.target.value)}
                     />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col md:flex-row items-center gap-2">
                     <h1 className="text-sm text-gray-500">End Date:</h1>
                     <input
                         type="date"
@@ -85,6 +85,7 @@ export default function CollectionsReport(){
             <button className="px-4 py-1 rounded bg-blue-900 text-white"
                 onClick={getReport}>Execute</button>
         </div>
+
         <div className="w-full flex items-center justify-between bg-blue-900 px-4 py-1">
             <h1 className="text-sm text-white font-semibold">Collected Cash Report</h1>
             <button className="text-sm text-white flex items-center gap-2" onClick={() =>{}}>
@@ -102,14 +103,14 @@ export default function CollectionsReport(){
                 <td className="px-4">Supervisor</td>
                 <td className="px-4 ">Collected Amount(USD)</td>
                 <td className="px-4 ">Collected Amount(ZIG)</td>
-                <td className="px-4">Period</td>
+                <td className="px-4 hidden md:block">Period</td>
             </tr>
             {report.map((record, index)=> ( 
                 <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-gray-300" key={index}>
                     <td className="px-4 flex">{record.supervisorname}</td>
                     <td className="px-4">{record.usdcollected.toFixed(2)}</td>
                     <td className="px-4">{record.zigcollected.toFixed(2)}</td>
-                    <td className="px-4">{startdate != undefined && enddate !== undefined ? `${startdate} to ${enddate}`: "All Time"}</td>
+                    <td className="px-4  hidden md:block">{startdate != undefined && enddate !== undefined ? `${startdate} to ${enddate}`: "All Time"}</td>
                 </tr>
             ))}
             </tbody>

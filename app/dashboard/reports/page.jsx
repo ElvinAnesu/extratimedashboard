@@ -5,7 +5,7 @@ import CollectionsReport from "@/components/tables/reports/collections";
 
 export default function ReportsPage(){
     return( 
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4 p-2">
             <Header title="Reports" />
             <CollectionsReport />
         </div>
