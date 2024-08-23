@@ -142,7 +142,7 @@ export default function AirtimeTransactionTable() {
               <td className="px-4 hidden md:table-cell">{transaction.extras.reciever}</td>
               <td className="px-4 hidden md:table-cell">{transaction.issuccessful? "completed": "failed"}</td>
               <td className="px-4">{transaction.executedby}</td>
-              <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"} hidden md:table-cell`}>
+              <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"} hidden md:block`}>
                 {transaction.cleared ? "Cleared" : "Pending"}
               </td>
               <td className="px-4 ">{formatDate(transaction.createdAt)}</td>

@@ -46,11 +46,11 @@ export async function GET(req){
 export async function POST(req){
     const {executedby, executerid, currency, amount, extras} = await req.json()
 
-   // const userid = new ObjectId(executerid)
+
 
     try{
        connectdb()
-    const user = await User.findById({_id:executerid})
+    const user = await User.findById(executerid)
     if(!user.active){
         console.log("user account not acctive")
         var status = user.active
