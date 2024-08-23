@@ -130,19 +130,19 @@ export default function AirtimeTransactionTable() {
         <tbody>
           <tr className="bg-blue-200 font-semibold text-sm py-1">
             <td className="px-4">Amount</td>
-            <td className="px-4 hidden md:block">Receiver No.</td>
-            <td className="px-4 hidden md:block">Status</td>
+            <td className="px-4 hidden md:table-cell">Receiver No.</td>
+            <td className="px-4 hidden md:table-cell">Status</td>
             <td className="px-4">Executed by</td>
-            <td className="px-4 hidden md:block">Cleared </td>
+            <td className="px-4 hidden md:table-cell">Cleared </td>
             <td className="px-4">Time</td>
           </tr>
           {transactions.map((transaction, i) => (
             <tr className="bg-gray-200 font-semibold text-xs py-1 border-b border-gray-300" key={i}>
               <td className="px-4">{transaction.currency}{transaction.amount}</td>
-              <td className="px-4 hidden md:block">{transaction.extras.reciever}</td>
-              <td className="px-4 hidden md:block">{transaction.issuccessful? "completed": "failed"}</td>
+              <td className="px-4 hidden md:table-cell">{transaction.extras.reciever}</td>
+              <td className="px-4 hidden md:table-cell">{transaction.issuccessful? "completed": "failed"}</td>
               <td className="px-4">{transaction.executedby}</td>
-              <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"} hidden md:block`}>
+              <td className={`px-4 ${transaction.cleared ? "text-green-600" : "text-amber-600"} hidden md:table-cell`}>
                 {transaction.cleared ? "Cleared" : "Pending"}
               </td>
               <td className="px-4 ">{formatDate(transaction.createdAt)}</td>
