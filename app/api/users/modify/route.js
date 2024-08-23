@@ -3,13 +3,14 @@ import { NextResponse } from "next/server"
 import User from "@/app/models/user"
 
 
-export async function PUT(request) {
+export async function POST(request) {
     try{
-        connectdb()
+        await connectdb()
         const updateusers = await User.updateMany(
-            { address: {$exists: false}},
-            { address: null }
+            {next: { $exists: false } },
+            {$set: {next: "halla" }},
         )
+        
         if(!updateusers){
             return NextResponse.json({
                 success:false,

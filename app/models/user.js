@@ -1,4 +1,4 @@
-import { Timestamp } from "mongodb"
+import { Double, Timestamp } from "mongodb"
 import mongoose, { Schema } from "mongoose"
 
 const userSchema = new Schema({
@@ -53,6 +53,10 @@ const userSchema = new Schema({
     nextofkinphonenumber:{
         type:String,
         default:null
+    },
+    shortfall:{
+        type: Number,
+        default:0
     },
     assignedVouchers: [{
         type: mongoose.Schema.Types.ObjectId,

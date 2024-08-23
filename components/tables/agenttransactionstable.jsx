@@ -94,6 +94,7 @@ export default function AgentTransactionsTable() {
                 <td className="px-1">Supervisor</td>
                 <td className="px-1">Pending Sales</td>
                 <td className="px-1">Total Sales</td>
+                <td className="px-1">Shortfall</td>
               </tr>
               {users.map((user, i) => (
                 <tr className="border-b border-gray-300" key={i}>
@@ -108,6 +109,7 @@ export default function AgentTransactionsTable() {
                   <td className="px-1">
                     {salesData[user._id] ? salesData[user._id].cleared.toFixed(2) : "Loading..."}
                   </td>
+                  <td className="px-1">{user.shortfall}</td>
                 </tr>
               ))}
             </tbody>

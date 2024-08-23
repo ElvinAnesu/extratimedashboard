@@ -55,7 +55,6 @@ export async function POST(req){
 
 // Get all users with pagination
 export async function GET(req) {
-
     const { searchParams } = new URL(req.url)
     const page = parseInt(searchParams.get("page")) || 1
     const pageSize = parseInt(searchParams.get("pageSize")) || 10
@@ -63,7 +62,7 @@ export async function GET(req) {
 
     console.log(searchQuery)
 
-    const query = searchQuery != "null"
+    const query = searchQuery != "null" && searchQuery != null
       ? { surname: { $regex: new RegExp(searchQuery, 'i') } }
       : {}
   
