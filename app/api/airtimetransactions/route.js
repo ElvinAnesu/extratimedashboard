@@ -4,6 +4,7 @@ import Airtimetransaction from "@/app/models/airtimetransaction"
 import User from "@/app/models/user"
 import bcrypt from "bcrypt"
 import mongoose from "mongoose"
+import { ObjectId } from "mongodb"
 
 
 export async function GET(req){
@@ -45,19 +46,21 @@ export async function GET(req){
 export async function POST(req){
     const {executedby, executerid, currency, amount, extras} = await req.json()
 
+   // const userid = new ObjectId(executerid)
+
     try{
        connectdb()
-     //  const user = await User.findById({_id:executerid})
-    // if(!user.active){
-    //     console.log("user account not acctive")
-    //     var status = user.active
-    //     return NextResponse.json({
-    //         success:false,
-    //         message:"user account not active",
-    //         status,
-    //         user
-    //     })
-    // }
+    const user = await User.findById({_id:executerid})
+    if(!user.active){
+        console.log("user account not acctive")
+        var status = user.active
+        return NextResponse.json({
+            success:false,
+            message:"user account not active",
+            status,
+            user
+        })
+    }
 
        const transaction = await Airtimetransaction.create({
         executedby,
@@ -88,9 +91,10 @@ export async function POST(req){
 
 export async function PUT(req){
     const {_id, extras} = await req.json()
+
     try{
         connectdb()
-        const transaction = await Airtimetransaction.findOneAndUpdate({_id},{issuccessful:true, extras:extras })
+        const transaction = await Airtimetransaction.findOneAndUpdate({_id:_id},{issuccessful:true, extras:extras })
         if(!transaction){
             return NextResponse.json({
                 success:false,
