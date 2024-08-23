@@ -7,8 +7,8 @@ export async function POST(request) {
     try{
         await connectdb()
         const updateusers = await User.updateMany(
-            {next: { $exists: false } },
-            {$set: {next: "halla" }},
+            {shortfall: { $exists: false } },
+            {$set: {shortfall: 0 }},
         )
         
         if(!updateusers){

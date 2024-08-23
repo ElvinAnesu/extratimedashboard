@@ -1,4 +1,3 @@
-import { Double, Timestamp } from "mongodb"
 import mongoose, { Schema } from "mongoose"
 
 const userSchema = new Schema({
