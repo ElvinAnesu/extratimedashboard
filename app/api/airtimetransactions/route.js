@@ -3,6 +3,7 @@ import connectdb from "@/mongodb"
 import Airtimetransaction from "@/app/models/airtimetransaction"
 import User from "@/app/models/user"
 import bcrypt from "bcrypt"
+import mongoose from "mongoose"
 
 
 export async function GET(req){
@@ -46,17 +47,17 @@ export async function POST(req){
 
     try{
        connectdb()
-       const user = await User.findById(executerid)
-    if(!user.active){
-        console.log("user account not acctive")
-        var status = user.active
-        return NextResponse.json({
-            success:false,
-            message:"user account not active",
-            status,
-            user
-        })
-    }
+     //  const user = await User.findById({_id:executerid})
+    // if(!user.active){
+    //     console.log("user account not acctive")
+    //     var status = user.active
+    //     return NextResponse.json({
+    //         success:false,
+    //         message:"user account not active",
+    //         status,
+    //         user
+    //     })
+    // }
 
        const transaction = await Airtimetransaction.create({
         executedby,
