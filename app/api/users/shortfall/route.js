@@ -31,6 +31,7 @@ export async function PUT(request) {
                         })
                     }
                     return NextResponse.json({
+                        updateshortfall,
                         success:true,
                         message: "Shortfall updated successully"
                     })
