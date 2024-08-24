@@ -23,13 +23,15 @@ export async function PUT(request) {
         if(isMatch){
             if(action === "increase"){
                 if(user.role === "agent"){
-                    const updateshortfall = User.findOneAndUpdate({_id},{shortfall:newamount})
+                    const updateshortfall = await User.findOneAndUpdate({_id},{$set: {shortfall: newamount }})
+
                     if(!updateshortfall){
                         return NextResponse.json({
                             success:false,
                             message: "Shortfall not updated"
                         })
                     }
+                    console.log(updateshortfall)
                     return NextResponse.json({
                         updateshortfall,
                         success:true,
@@ -43,7 +45,7 @@ export async function PUT(request) {
                 }
             }else if(action === "decrease"){
                 if(user.role !== "agent"){
-                    const updateshortfall = User.findOneAndUpdate({_id},{shortfall:newamount})
+                    const updateshortfall = await User.findOneAndUpdate({_id},{shortfall:newamount})
                     if(!updateshortfall){
                         return NextResponse.json({
                             success:false,
@@ -51,6 +53,7 @@ export async function PUT(request) {
                         })
                     }
                     return NextResponse.json({
+                        updateshortfall,
                         success:true,
                         message: "Shortfall updated successully"
                     })
