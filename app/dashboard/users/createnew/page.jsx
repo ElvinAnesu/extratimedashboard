@@ -151,19 +151,6 @@ export default function CreateAdmin(){
                     <option value="supervisor">Supervisor</option>
                     <option value="admin">Admin</option>
                 </select>
-                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"            
-                    placeholder="keen Phone Number"
-                    type="text"
-                    onChange={(e) => setFirstname(e.target.value)}/>
-              
-                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"            
-                    placeholder="next of keen"
-                    type="text"
-                    />
-                <input className="h-9 border rounded border-gray-400 w-full p-2 text-black"            
-                    placeholder="Residental Adress"
-                    type="text"
-                    />
                 {role !== "admin" && role !== "supervisor" &&
                 <select className="h-9 border rounded border-gray-400 w-full p-2 text-black">
                     <option>Location</option>
