@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import { Cross1Icon } from "@radix-ui/react-icons"
+import ConfirmDialog from "../dialogs/confirmdialog";
 
 const PAGE_SIZE = 10
 
@@ -12,6 +13,13 @@ export default function SupervisorAgentsTable({supervisor}) {
   const [total, setTotal] = useState(0);
   const [isfetching, setIsfetching] = useState(false)
   const [showClearmodal, setShowClearmodal] = useState(false)
+  const [showresponse, setShowresponse] = useState(false)
+  const [adminemail, setAdminemail] = useState()
+  const [password, setPasssword] = useState()
+  const [responsetitle, setResponsetitle] = useState()
+  const [responsemsg, setResponsemsg] = useState()
+  const [agentid, setAgentid] = useState()
+
 
   const getAgents= async (page = 1) => {
     setIsfetching(true)
@@ -64,6 +72,32 @@ export default function SupervisorAgentsTable({supervisor}) {
   };
 
   const confirmCashin = async() => {
+    setShowClearmodal(false)
+    setIsfetching(true)
+    const res = await fetch("/api/airtimetransactions/cashin", {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        email: adminemail,
+        pin: password,
+        agentid: agentid,
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      //confirm  cash in
+      setIsfetching(false)
+      setResponsetitle("Success")
+      setResponsemsg(data.message)
+      setShowresponse(true)
+    } else {
+      //show error
+      setIsfetching(false)
+      setResponsetitle("failed")
+      setResponsemsg(data.message)
+    }
 
   }
 
@@ -113,7 +147,7 @@ export default function SupervisorAgentsTable({supervisor}) {
                   </td>
                   <td className="px-1">
                     <button className="w-full"
-                      onClick={()=> setShowClearmodal(true)}>
+                      onClick={()=> {setShowClearmodal(true); setAgentid(user._id)} }>
                       {salesData[user._id] ? salesData[user._id].notcahsedin : "Loading..."}
                     </button>
                   </td>
@@ -136,6 +170,7 @@ export default function SupervisorAgentsTable({supervisor}) {
         </div>
       )}
 
+      
       { showClearmodal && <div className="w-full h-full absolute flex items-center justify-center top-0">
           <div className="flex flex-col bg-white p-8 rounded shadow text-sm items-center">
             <div className="w-full flex items-center justify-end">
@@ -148,9 +183,11 @@ export default function SupervisorAgentsTable({supervisor}) {
             <p className="text-xs">confirm amount to be cleared matches the amount submited by the supervisor</p>
             <div className="flex flex-col gap-2 m-2">
               <input className="border rounded border border-gray-900 px-2" 
-                placeholder="email"/>
+                placeholder="email"
+                onChange={(e) =>  setAdminemail(e.target.value)}/>
               <input className="border rounded border border-gray-900 px-2" 
-                placeholder="password"/>
+                placeholder="password"
+                  onChange={(e) => setPasssword(e.target.value)}/>
               <button className="bg-blue-900 p-1 rounded text-white"
                 onClick={confirmCashin}>
                 Confirm
@@ -158,6 +195,8 @@ export default function SupervisorAgentsTable({supervisor}) {
             </div>
           </div>
       </div>}
+
+      {showresponse && <ConfirmDialog title={responsetitle} message={responsemsg} onConfirm={()=> setShowresponse(false)} />}
     </div>
   )
 }
