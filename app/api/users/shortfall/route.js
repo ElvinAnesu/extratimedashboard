@@ -20,6 +20,12 @@ export async function PUT(request) {
         }
         const isMatch = await bcrypt.compare(pin, user.password)
 
+        if(_id !== user._id){
+            return NextResponse.json({
+                success:false,
+                message: "Invalid credential"
+            })
+        }
         if(isMatch){
             if(action === "increase"){
                 if(user.role === "agent"){
