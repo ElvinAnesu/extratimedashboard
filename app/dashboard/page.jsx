@@ -158,13 +158,13 @@ export default function Dashboard(){
         <div className="flex flex-col gap-8">
             <div className="flex flex-col p-4 gap-4 md:flex-row items-center justify-end gap-4">
             <DashboardCard 
-                    value= {`USD${outstandingcollections.toFixed(2)}`}
+                    value= {fetchingsales?"loading...":`USD${outstandingcollections.toFixed(2)}`}
                     product={"Outstanding Collections"}/>
                 <DashboardCard 
-                    value= {`USD${(collectionstodaymalcolm + collectionstodaydenny + collectionstodayjames + collectionstodaytinashe).toFixed(2)}`}
+                    value= {fetchingsales?"loading...":`USD${(collectionstodaymalcolm + collectionstodaydenny + collectionstodayjames + collectionstodaytinashe).toFixed(2)}`}
                     product={"Today's Collections"}/>
                 <DashboardCard
-                    value={`USD${cashintoday.toFixed(2)}`}
+                    value={fetchingsales?"loading...":`USD${cashintoday.toFixed(2)}`}
                     product={"Today's Cash ins"}/>
                 <DashboardCard 
                     value={fetchingsales? "loading...":`USD${salestoday.toFixed(2)}`}
