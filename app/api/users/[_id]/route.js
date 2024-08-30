@@ -5,12 +5,30 @@ import User from "@/app/models/user";
 
 // Fetch users by role with pagination
 export async function POST(req) {
-  const { role, page = 1, pageSize = 10 } = await req.json();
+
+  const { searchQuery, role, page = 1, pageSize = 10 } = await req.json();
+
+  const query = searchQuery != "null" && searchQuery != null
+  ? {
+    $and: [
+      {
+        $or: [
+          { surname: { $regex: new RegExp(searchQuery, 'i') } }, 
+          { firstname: { $regex: new RegExp(searchQuery, 'i') } },
+          { location: { $regex: new RegExp(searchQuery, 'i') } }
+        ]
+      },
+      { role }
+    ]
+  }
+  : {role}
+
+  console.log(query)
 
   try {
     await connectdb();
-    const totalUsers = await User.countDocuments({ role });
-    const users = await User.find({ role })
+    const totalUsers = await User.countDocuments(query);
+    const users = await User.find(query)
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 

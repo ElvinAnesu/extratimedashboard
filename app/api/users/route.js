@@ -63,7 +63,17 @@ export async function GET(req) {
     console.log(searchQuery)
 
     const query = searchQuery != "null" && searchQuery != null
-      ? { surname: { $regex: new RegExp(searchQuery, 'i') } }
+      ?  {
+            $and: [
+              {
+                $or: [
+                  { surname: { $regex: new RegExp(searchQuery, 'i') } }, 
+                  { firstname: { $regex: new RegExp(searchQuery, 'i') } },
+                  { location: { $regex: new RegExp(searchQuery, 'i') } }
+                ]
+              }
+            ]
+          }
       : {}
   
     

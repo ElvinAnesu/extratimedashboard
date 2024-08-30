@@ -1,6 +1,7 @@
 // components/AgentsTable.js
 "use client"
 import { useEffect, useState } from "react"
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 
 const PAGE_SIZE = 10;
  
@@ -12,6 +13,7 @@ export default function AgentTransactionsTable() {
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [isloading, setIsloading] = useState(false)
+  const [searchQuery, setSearchquery] = useState()
 
 
   const getUsers = async (page = 1) => {
@@ -23,6 +25,7 @@ export default function AgentTransactionsTable() {
         role: "agent",
         page,
         pageSize: PAGE_SIZE,
+        searchQuery
       }),
     });
 
@@ -80,7 +83,31 @@ export default function AgentTransactionsTable() {
   };
 
   return (
-    <div className="min-w-full max-h-full overflow-hidden text-sm p-4 bg-gray-200 rounded shadow">
+    <div className="min-w-full max-h-full overflow-hidden text-sm p-4 bg-gray-200 rounded shadow flex flex-col gap-4">
+      <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
+        <div className="flex gap-4 items-center">
+            <h1 className="text-sm text-gray-500">
+                Sort by:</h1>
+            <select className="rounded px-2 text-sm py-1 border border-gray-400 ">
+                <option>Default</option>
+                <option>Cash in hand</option>
+                <option>Total sales</option>
+                <option>Location</option>
+            </select>
+        </div>
+        <div className="flex gap-2">
+            <input className=" border rounded border-gray-400  px-2 py-1 text-black text-sm"
+                placeholder="search"
+                type="text"
+                onChange={(e) => setSearchquery(e.target.value)}
+                />
+            <button className="px-2 rounded bg-blue-600 text-white flex gap-1 text-sm flex items-center justify-center"
+              onClick={() => getUsers(page)}>
+                <MagnifyingGlassIcon />
+                Search
+            </button>
+        </div>
+      </div>
       {isloading? <div className="flex w-full h-full items-center justify-center p-8">
                 <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
           </div>:

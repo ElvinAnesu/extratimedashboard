@@ -103,7 +103,7 @@ export default function UsersTable() {
                 onChange={(e) => setSearchquery(e.target.value)}
                 />   
             <button className="px-2 rounded bg-blue-600 text-white flex gap-1  py-1 px-2 text-sm flex items-center justify-center"
-                onClick={getUsers}>
+                onClick={() => getUsers(page)}>
                 <MagnifyingGlassIcon />
                 Search
             </button>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ConfirmDelete from "../dialogs/confirmdelete";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 
 const PAGE_SIZE = 10;
 
@@ -12,12 +13,14 @@ export default function SupervisorsTable() {
 
   const [showdialog, setShowdialog] = useState(false);
   const [users, setUsers] = useState([]);
-  const [agnetsData, setAgentsData] = useState({});
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [searchQuery, setSearchQuery] = useState()
+  const [isloading, setIsloading] = useState(false)
   
 
   const getUsers = async (page = 1) => {
+    setIsloading(true)
     const res = await fetch("/api/users/filters", {
       method: "POST",
       headers: { "Content-type": "application/json" },
@@ -25,6 +28,7 @@ export default function SupervisorsTable() {
         role: "supervisor",
         page,
         pageSize: PAGE_SIZE,
+        searchQuery
       }),
     });
 
@@ -33,37 +37,12 @@ export default function SupervisorsTable() {
     if (data.success) {
       setUsers(data.users);
       setTotal(data.total);
-      // Fetch sales data for each user
-      data.users.forEach(user => {
-        getSupervisorsAgents(user._id)
-      });
+      setIsloading(false)
     } else {
+      setIsloading(false)
       setError("Error fetching users");
     }
   };
-
-  const getSupervisorsAgents = async (userid) => {
-    const res = await fetch("/api/users/filters", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        filter: "supervisor",
-        value: userid,
-        pageSize: PAGE_SIZE,
-      }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      setAgentsData(prevAgentsData => ({
-        ...prevAgentsData,
-        [userid]: {
-          agents: data.users,
-        },
-      }));
-    } else {
-      setError(`Error fetching sales data for user ${userid}`);
-    }
-  }
 
   const viewSupervisor = (_id) => {
     router.push(`/dashboard/supervisors/${_id}`)
@@ -87,8 +66,24 @@ export default function SupervisorsTable() {
   };
 
   return (
-    <div className="min-w-full max-h-full overflow-hidden text-sm bg-gray-200 rounded p-4">
-      <table className="w-full">
+    <div className="min-w-full max-h-full overflow-hidden text-sm bg-gray-200 rounded p-4 flex flex-col">
+      <div className=" mb-4 flex gap-2  gap-2 flex items-center justify-end">
+          <input className="border rounded border-gray-400  px-2 py-1 text-sm text-black"
+              placeholder="Search"
+              type="text"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              />
+          <button className="px-2 rounded bg-blue-600 text-white flex py-1 text-sm gap-1 items-center justify-center"
+            onClick={()=> getUsers(page)}>
+              <MagnifyingGlassIcon />
+              Search
+          </button>
+      </div>
+      {isloading?
+        <div className="flex w-full h-full items-center justify-center p-8">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        </div>:
+        <table className="w-full">
         <tbody>
           <tr className="bg-blue-900 font-semibold text-white">
             <td className="px-1">#</td>
@@ -113,7 +108,7 @@ export default function SupervisorsTable() {
           ))}
         </tbody>
       </table>
-
+}
       <div className="flex justify-between items-center mt-4">
         <button onClick={handlePreviousPage} disabled={page === 1} className="px-4 py-2 bg-blue-900 rounded text-white">
           Previous

@@ -1,6 +1,6 @@
 import Header from "@/components/header"
 import SupervisorsTable from "@/components/tables/supervisorstable"
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
+
 
 
 export default function Supervisors(){
@@ -9,20 +9,8 @@ export default function Supervisors(){
         <div className="w-full h-full flex flex-col gap-4 p-2">
             <Header title="Supervisors" />
             <div className=" flex-col gap-4">
-            <div className=" mb-4 flex gap-2  gap-2 flex items-center justify-end">
-                        <input className="border rounded border-gray-400  px-2 py-1 text-sm text-black"
-                            placeholder="Search"
-                            type="text"
-                            />
-                        <button className="px-2 rounded bg-blue-600 text-white flex py-1 text-sm gap-1 items-center justify-center">
-                            <MagnifyingGlassIcon />
-                            Search
-                        </button>
-                    </div>
                 <SupervisorsTable />
-            </div>
-
-            
+            </div>            
         </div>
     )
 }
