@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import User from "@/app/models/user";
 import Airtimetransaction from "@/app/models/airtimetransaction";
 
+export const dynamic = 'force-dynamic'
+
 // Create an index on the foreign field
 User.collection.createIndex({ active: 1 });
 Airtimetransaction.collection.createIndex({ cleared: 1 });
