@@ -3,6 +3,8 @@ import User from "@/app/models/user"
 import { NextResponse } from "next/server"
 import { user } from "@nextui-org/react";
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(req){
     const {filter, value} = await req.json()
     let users = null;

@@ -3,6 +3,7 @@ import connectdb from "@/mongodb"
 import User from "@/app/models/user"
 import bcrypt from "bcrypt"
 
+export const dynamic = 'force-dynamic'
 
 //create new user
 export async function POST(req){
