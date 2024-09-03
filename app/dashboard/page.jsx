@@ -36,7 +36,7 @@ export default function Dashboard() {
     var data = await response.json();
 
     if (data.success) {
-      setSalestoday(data.todayssales);
+      setSalestoday(data.total);
       setFetchingsales(false);
     } else {
       setFetchingsales(false);

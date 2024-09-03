@@ -8,33 +8,58 @@ export const dynamic = 'force-dynamic'
 export async function GET(request) {
     try{
         connectdb()
-        const today = new Date();
-        const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-        const endOfDay = new Date(today.setHours(23, 59, 59, 999));
-
-        const transactions = await Airtimetransaction.find({issuccessful:true, createdAt:{
-            $gte: startOfDay,
-            $lte: endOfDay,
-          },})
-
-        if(!transactions){
-            return NextResponse.json({
-                success: false,
-                message: "failed to fetch transactions"
-            })
-        }
-
-        let totalsales = 0
-
-        transactions.forEach(transaction => {
-            totalsales = totalsales + transaction.extras.amount
-        })
+       const transactions = await Airtimetransaction.aggregate([
+            {
+                // Match documents where createdAt is within today's range and issuccessful is true
+                $match: {
+                    createdAt: {
+                        $gte: new Date(new Date().setHours(0, 0, 0, 0)), // Start of today
+                        $lt: new Date(new Date().setHours(24, 0, 0, 0))  // Start of tomorrow
+                    },
+                    issuccessful: true  // Filter for successful transactions
+                }
+            },
+            {
+                // Optionally, you can project specific fields if needed
+                $project: {
+                    executedby: 1,
+                    executerid: 1,
+                    currency: 1,
+                    amount: 1,
+                    issuccessful: 1,
+                    cleared: 1,
+                    clearedby: 1,
+                    clearedat: 1,
+                    cashedin: 1,
+                    extras: 1,
+                    createdAt: 1,
+                    updatedAt: 1
+                }
+            },
+            {
+            // Group by null to sum all extras.amount values
+                $group: {
+                    _id: null,
+                    totalExtrasAmount: { $sum: "$extras.amount" },  // Sum the extras.amount field
+                    transactions: { $push: "$$ROOT" }  // Push all the documents to an array
+                }
+            },
+            {
+                // Optionally, remove the _id field from the final output
+                $project: {
+                    _id: 0,
+                    totalExtrasAmount: 1,
+                    transactions: 1
+                }
+            }
+        ]);
 
         return NextResponse.json({
-            success:true,
-            todayssales: totalsales
+            success: true,
+            message:"transactions fetched successfully",
+            total: transactions[0]?.totalExtrasAmount || 0,  
+            transactions: transactions[0]?.transactions || []
         })
-
     }catch(error){
         console.log(error)
         return NextResponse.json({
