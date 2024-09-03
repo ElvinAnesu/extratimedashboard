@@ -2,6 +2,8 @@ import connectdb from "@/mongodb"
 import { NextResponse } from "next/server"
 import Airtimetransaction from "@/app/models/airtimetransaction"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req,{params}){
     const {userid} = params
     try{

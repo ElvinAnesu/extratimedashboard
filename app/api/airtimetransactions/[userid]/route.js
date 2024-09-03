@@ -28,11 +28,11 @@ export async function GET(req,{params}){
         })
     }
 }
+
 // Clear transactions
 export async function POST(req,{params}) {
     const {userid} = params
     const { supervisoremail, supervisorpassword } = await req.json()
-  
     try {
       await connectdb();
       const user = await User.findOne({ email: supervisoremail })

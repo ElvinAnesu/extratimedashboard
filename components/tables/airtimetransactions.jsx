@@ -111,8 +111,8 @@ export default function AirtimeTransactionTable() {
   return (
     <div className="w-full h-full flex flex-col gap-4">
       <div className="flex w-full flex-col md:flex-row justify-end gap-8 mb-4">
-        <DashboardCard value={`USD${pendingSales.toFixed(2)}`} product={"Pending Sales"} />
-        <DashboardCard value={`USD${clearedSales.toFixed(2)}`} product={"Cleared Sales"} />
+        <DashboardCard value={`USD${pendingSales? pendingSales.toFixed(2) : 0}`} product={"Pending Sales"} />
+        <DashboardCard value={`USD${clearedSales? clearedSales.toFixed(2) : 0}`} product={"Cleared Sales"} />
         <DashboardCard value={`USD${(clearedSales+pendingSales).toFixed(2)}`} product={"Total Sales"} />
       </div> 
       <div className="w-full flex items-center justify-between bg-blue-900 px-4 py-1">
@@ -122,6 +122,7 @@ export default function AirtimeTransactionTable() {
           Refresh
         </button>
       </div>
+
       <div className="w-full p-4 rounded bg-gray-200">
         {isloading? <div className="flex w-full h-full items-center justify-center p-8">
                 <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
@@ -160,6 +161,7 @@ export default function AirtimeTransactionTable() {
           </button>
         </div>
       </div>
+
     </div>
   );
 }

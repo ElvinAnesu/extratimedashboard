@@ -4,6 +4,7 @@ import Airtimetransaction from "@/app/models/airtimetransaction"
 import User from "@/app/models/user"
 import bcrypt from "bcrypt"
 
+export const dynamic = 'force-dynamic'
 //clear cashed in transactions
 export async function PUT(request, {params}) {
 
