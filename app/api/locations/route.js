@@ -17,10 +17,27 @@ export async function POST(req){
     }
 }
 
+//get all locations with pagination
 export async function GET(req){
+    const { searchParams } = new URL(req.url)
+    const page = parseInt(searchParams.get("page")) || 1
+    const pageSize = parseInt(searchParams.get("pageSize")) || 10
+    const searchQuery = searchParams.get("searchQuery")
+
+    console.log(searchQuery)
+
+    const query = searchQuery != "null" && searchQuery != null
+      ? { surname: { $regex: new RegExp(searchQuery, 'i') } }
+      : {}
+
+    console.log(query) 
     try{
-        connectdb()
-        const locations = await Location.find()
+        await connectdb()
+        const totalLocations = await Location.countDocuments(query)
+        
+        const locations = await Location.find(query)
+        .skip((page - 1) * pageSize)
+        .limit(pageSize)
 
         if(!locations){
             return NextResponse.json({
@@ -31,11 +48,19 @@ export async function GET(req){
 
         return NextResponse.json({
             locations,
+            total:totalLocations,
+            page,
+            pageSize,
             message: "locations fetched successfully",
             success: true
-        })
+        });
 
     }catch(error){
-        return NextResponse.json(error)
+        console.log(error);
+        return NextResponse.json({
+            error,
+            message: "Error in fetching Locations",
+            success: false,
+        });    
     }
 }

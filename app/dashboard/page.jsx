@@ -3,6 +3,7 @@ import DashboardCard from "@/components/cards/dashboardcards"
 import BalancesChart from "@/components/charts/balancesChart"
 import LocationPerformance from "@/components/charts/locationsPerformance"
 import ServicePerfomancePieChart from "@/components/charts/servicePerfomancePieChart"
+import Rankingstable from "@/components/tables/rankingstable"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
@@ -33,9 +34,10 @@ export default function Dashboard(){
     const [outsandingmalcolm, setOutstandingmalcolm] = useState(0)
     const [collectionstodaymalcolm, setCollectionstodaymalcolm] = useState(0)
     const [agentperfomancedmalcolm, setAgentperformancemalcolm] = useState(0)
+ 
+    
 
-
-    const getTodaysSales = async() => {
+       const getTodaysSales = async() => {
         setFetchingsales(true)
         const response = await fetch("/api/reports/sales/today",{
             method:"GET",
@@ -152,7 +154,7 @@ export default function Dashboard(){
         getJamestotals()
         getOutsaningcollections()
     },[])
-
+   
     
     return(
         <div className="flex flex-col gap-8">
@@ -179,11 +181,13 @@ export default function Dashboard(){
                     <h1 className="text-sm font-semibold text-gray-600">Today&apos;s Collections</h1>
                     <ServicePerfomancePieChart _labels={["James","Tinashe", "Denny","Malcolm"]} _data={[collectionstodayjames, collectionstodaytinashe, collectionstodaydenny,collectionstodaymalcolm]}/>
                 </div>
+
                 <div className="flex flex-col gap-2 items-center justify-center">
                 <h1 className="text-sm font-semibold text-gray-600">Agent&apos;s Perfomance</h1>
                     <ServicePerfomancePieChart _labels={["James","Tinashe", "Denny","Malcolm"]} _data={[agentperfomancejames, agentperfomancedtinashe, agentperfomancedenny,agentperfomancedmalcolm]}/>
                 </div>
             </div>
+            <Rankingstable/>
         </div>
     )
 }

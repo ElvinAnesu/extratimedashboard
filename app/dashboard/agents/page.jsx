@@ -1,6 +1,7 @@
 "use client";
 import Header from "@/components/header";
 import AgentsTable from "@/components/tables/agentstable";
+import rankingstable from "@/components/tables/rankingstable";
 import { useRouter } from "next/navigation";
 
 

@@ -44,11 +44,11 @@ export default function Locations() {
           <div>
            <div className="flex mb-4 gap-2">
            <input
-              className="border rounded border-gray-400  py-2 text-black f"
+              className="border rounded border-gray-400  py-1 px-2 text-sm text-black"
               placeholder="Search"
               type="text"
             />
-            <button className="px-4 flex justify-center items-center border rounded text-white border-gray-400  py-2 gap-2 bg-blue-600">
+            <button className="px-2 rounded bg-blue-600 text-white flex gap-1  py-1 px-2 text-sm flex items-center justify-center">
               <MagnifyingGlassIcon />
               Search
             </button>

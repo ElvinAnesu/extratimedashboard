@@ -1,15 +1,14 @@
-// components/AgentsTable.js
+// components/rankingstable.js
 "use client";
 import { EyeOpenIcon, TrashIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ConfirmDelete from "../dialogs/confirmdelete";
 import AlertDialog from "../dialogs/alertdialog";
-import rankingstable from "./rankingstable";
 
 const PAGE_SIZE = 10;
 
-export default function AgentsTable() {
+export default function Rankingstable() {
   const router = useRouter();
 
   const [showdialog, setShowdialog] = useState(false);
@@ -117,6 +116,7 @@ export default function AgentsTable() {
       setPage(page + 1);
     }
   };
+  
 
   return (
     <div className="min-w-full max-h-full overflow-hidden text-sm">
@@ -125,25 +125,19 @@ export default function AgentsTable() {
              <tr className="bg-gray-200 font-semibold">
             <td className="border border-white px-1">#</td>
             <td className="border border-white px-1">Agent name</td>
-            <td className="border border-white px-1">Phone Number</td>
-            <td className="border border-white px-1">Location</td>
             <td className="border border-white px-1">Supervisor</td>
-            <td className="border border-white px-1">Pending Sales</td>
+            <td className="border border-white px-1">Location</td>
             <td className="border border-white px-1">Total Sales</td>
           </tr>
           {users.map((user, i) => (
             <tr className="" key={i}>
               <td className="border-b border px-1">{(page - 1) * PAGE_SIZE + i + 1}</td>
               <td className="border-b border px-1">{`${user.firstname} ${user.surname}`}</td>
-              <td className="border-b border px-1">{user.phonenumber}</td>
-              <td className="border-b border px-1">{user.location}</td>
               <td className="border-b border px-1">{user.supervisor}</td>
+              <td className="border-b border px-1"></td>
               <td className="border-b border px-1">
-                {salesData[user._id] ? salesData[user._id].pending : "Loading..."}
               </td>
-              <td className="border-b border px-1">
-                {salesData[user._id] ? salesData[user._id].cleared : "Loading..."}
-              </td>
+              
             </tr>
           ))}
         </tbody>
