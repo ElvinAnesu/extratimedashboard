@@ -3,15 +3,16 @@ import Header from "@/components/header";
 import { useRouter } from "next/navigation";
 import DashboardCard from "@/components/cards/dashboardcards";
 import { useEffect, useState } from "react";
+import NetoneTransactionTable from "@/components/tables/netone/transactions/transactionstable";
 
 export default function NetoneHome() {
 	const router = useRouter();
 	const [usdBalance, setUsdBalance] = useState(0);
 	const [fetchingUsdBalance, setFetchingUsdBalance] = useState(false);
-	const [zigBalance, setZigBalance] = useState(0);
-	const [fetchingZigBalance, setFetchingZigBalance] = useState(false);
-	const [zigOutsandingSales, setZigOutsandingSales] = useState(0);
-	const [fetchingZigOutsandingSales, setFetchingZigOutsandingSales] =
+	const [zwgBalance, setZwgBalance] = useState(0);
+	const [fetchingZwgBalance, setFetchingZwgBalance] = useState(false);
+	const [zwgOutsandingSales, setZwgOutsandingSales] = useState(0);
+	const [fetchingZwgOutsandingSales, setFetchingZwgOutsandingSales] =
 		useState(false);
 	const [usdOutsandingSales, setUsdOutsandingSales] = useState(0);
 	const [fetchingUsdOutsandingSales, setFetchingUsdOutsandingSales] =
@@ -19,25 +20,18 @@ export default function NetoneHome() {
 
 	const getUsdBalance = async () => {
 		setFetchingUsdBalance(true);
-		const referenceCode = Date.now().toString();
 		try {
-			const response = await fetch(
-				"https://pinlessevd.netone.co.zw/api/v1/agents/wallet-balance",
-				{
-					method: "GET",
-					headers: {
-						"x-access-code": "platinumresources1@gmail.com",
-						"x-access-password": "Default001",
-						"x-agent-reference": referenceCode,
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			const response = await fetch("/api/netone/balance/usd", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 			const data = await response.json();
-			if (data.ReplyCode === 2) {
-				setUsdBalance(data.WalletBalance);
+			if (data.success) {
+				setUsdBalance(data.balance);
 			} else {
-				alert("Response", data.ReplyMsg);
+				alert("Error: ", data.message);
 			}
 		} catch (error) {
 			console.error("Error fetching USD balance:", error);
@@ -47,8 +41,32 @@ export default function NetoneHome() {
 		}
 	};
 
+	const getZwgBalance = async () => {
+		setFetchingZwgBalance(true);
+		try {
+			const response = await fetch("/api/netone/balance/zwg", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await response.json();
+			if (data.success) {
+				setZwgBalance(data.balance);
+			} else {
+				alert("Error: ", data.message);
+			}
+		} catch (error) {
+			console.error("Error fetching USD balance:", error);
+			alert("Exception", error.toString());
+		} finally {
+			setFetchingZwgBalance(false);
+		}
+	};
+
 	useEffect(() => {
 		getUsdBalance();
+		getZwgBalance();
 	}, []);
 	return (
 		<div className="w-full h-full flex flex-col gap-4 p-4">
@@ -57,9 +75,9 @@ export default function NetoneHome() {
 				<div className="flex flex-col md:flex-row gap-4 items-center justify-end">
 					<DashboardCard
 						value={
-							fetchingZigOutsandingSales
+							fetchingZwgOutsandingSales
 								? "loading..."
-								: `USD${zigOutsandingSales.toFixed(2)}`
+								: `USD${zwgOutsandingSales.toFixed(2)}`
 						}
 						product={"Zig outstanding sales"}
 					/>
@@ -73,7 +91,7 @@ export default function NetoneHome() {
 					/>
 					<DashboardCard
 						value={
-							fetchingZigBalance ? "loading..." : `USD${zigBalance.toFixed(2)}`
+							fetchingZwgBalance ? "loading..." : `USD${zwgBalance.toFixed(2)}`
 						}
 						product={"Zig balance"}
 					/>
@@ -84,6 +102,7 @@ export default function NetoneHome() {
 						product={"USD balance"}
 					/>
 				</div>
+				<NetoneTransactionTable />
 			</div>
 		</div>
 	);

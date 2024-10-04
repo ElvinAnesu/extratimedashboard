@@ -1,12 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
-const airtimetransactionSchema = new Schema(
+const netoneTransactionSchema = new Schema(
 	{
-		executedby: {
+		executedBy: {
 			type: String,
 			required: true,
 		},
-		executerid: {
+		executerId: {
 			type: String,
 			required: true,
 		},
@@ -14,11 +14,15 @@ const airtimetransactionSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		amount: {
+		receiver: {
 			type: String,
 			required: true,
 		},
-		issuccessful: {
+		amount: {
+			type: Number,
+			required: true,
+		},
+		isSuccessful: {
 			type: Boolean,
 			default: false,
 		},
@@ -26,28 +30,31 @@ const airtimetransactionSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		clearedby: {
+		clearedBy: {
 			type: String,
 			default: null,
 		},
-		clearedat: {
-			type: String,
+		clearedAt: {
+			type: Date,
 			default: null,
 		},
-		cashedin: {
+		cashedIn: {
 			type: Boolean,
 			default: false,
 		},
-		extras: {
+		cashedInAt: {
+			type: Date,
+			default: null,
+		},
+		details: {
 			type: {},
 			default: {},
 		},
 	},
 	{ timestamps: true }
 );
+const NetoneTransaction =
+	mongoose.models.NetoneTransaction ||
+	mongoose.model("NetoneTransaction", netoneTransactionSchema);
 
-const Airtimetransaction =
-	mongoose.models.Airtimetransaction ||
-	mongoose.model("Airtimetransaction", airtimetransactionSchema);
-
-export default Airtimetransaction;
+export default NetoneTransaction;
